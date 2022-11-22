@@ -20,7 +20,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.dsl.viewModel
+//import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import org.koin.core.parameter.parametersOf
 import java.math.BigDecimal
 
 private const val NOME_BANCO_DE_DADOS = "aluraesporte.db"
@@ -86,6 +88,6 @@ val uiModule = module {
 
 val viewModelModule = module {
     viewModel<ProdutosViewModel> { ProdutosViewModel(get()) }
-    viewModel<DetalhesProdutoViewModel> { (id: Long) -> DetalhesProdutoViewModel(id, get()) }
+    viewModel<DetalhesProdutoViewModel> { DetalhesProdutoViewModel(produtoId = parametersOf().get(),get()) }
     viewModel<PagamentoViewModel> { PagamentoViewModel(get(), get()) }
 }

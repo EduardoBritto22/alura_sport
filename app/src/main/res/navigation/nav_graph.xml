@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/productsList">
+
+    <fragment
+        android:id="@+id/productsList"
+        android:name="br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment"
+        tools:layout="@layout/lista_produtos"
+        android:label="List of products" />
+
+    <fragment
+        android:id="@+id/productDetails"
+        android:label="Details of the product"
+        android:name="br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment"
+        tools:layout="@layout/detalhes_produto" />
+</navigation>

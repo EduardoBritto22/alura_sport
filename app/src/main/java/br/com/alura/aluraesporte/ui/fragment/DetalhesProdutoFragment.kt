@@ -12,7 +12,6 @@ import br.com.alura.aluraesporte.model.Produto
 import br.com.alura.aluraesporte.ui.activity.CHAVE_PRODUTO_ID
 import br.com.alura.aluraesporte.ui.viewmodel.DetalhesProdutoViewModel
 import kotlinx.android.synthetic.main.detalhes_produto.*
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -22,7 +21,7 @@ class DetalhesProdutoFragment : Fragment() {
         arguments?.getLong(CHAVE_PRODUTO_ID)
             ?: throw IllegalArgumentException(ID_PRODUTO_INVALIDO)
     }
-    private val viewModel: DetalhesProdutoViewModel by viewModel { parametersOf(produtoId) }
+    private val viewModel: DetalhesProdutoViewModel by viewModel(parametersOf(produtoId).component1())
     var quandoProdutoComprado: (produto: Produto) -> Unit = {}
 
     override fun onCreateView(
