@@ -6,21 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout.VERTICAL
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import br.com.alura.aluraesporte.R
-import br.com.alura.aluraesporte.model.Produto
+import br.com.alura.aluraesporte.ui.activity.CHAVE_PRODUTO_ID
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProdutosAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.ProdutosViewModel
 import kotlinx.android.synthetic.main.lista_produtos.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ListaProdutosFragment : Fragment() {
+class ProductsListFragment : Fragment() {
 
     private val viewModel: ProdutosViewModel by viewModel()
     private val adapter: ProdutosAdapter by inject()
-    var quandoProdutoSelecionado: (produto: Produto) -> Unit = {}
+    private val navController by lazy {
+        findNavController()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +30,11 @@ class ListaProdutosFragment : Fragment() {
     }
 
     private fun buscaProdutos() {
-        viewModel.buscaTodos().observe(this, Observer { produtosEncontrados ->
+        viewModel.buscaTodos().observe(this) { produtosEncontrados ->
             produtosEncontrados?.let {
                 adapter.atualiza(it)
             }
-        })
+        }
     }
 
     override fun onCreateView(
@@ -54,8 +56,16 @@ class ListaProdutosFragment : Fragment() {
     private fun configuraRecyclerView() {
         val divisor = DividerItemDecoration(context, VERTICAL)
         lista_produtos_recyclerview.addItemDecoration(divisor)
-        adapter.onItemClickListener = quandoProdutoSelecionado
+        adapter.onItemClickListener = {selectedProduct ->
+            gotToProductDetails(selectedProduct.id)
+        }
         lista_produtos_recyclerview.adapter = adapter
+    }
+
+    private fun gotToProductDetails(productId: Long) {
+        val data = Bundle()
+        data.putLong(CHAVE_PRODUTO_ID, productId)
+        navController.navigate(R.id.productDetails, data)
     }
 
 }

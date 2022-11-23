@@ -7,13 +7,21 @@
 
     <fragment
         android:id="@+id/productsList"
-        android:name="br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment"
+        android:name="br.com.alura.aluraesporte.ui.fragment.ProductsListFragment"
         tools:layout="@layout/lista_produtos"
         android:label="List of products" />
 
     <fragment
         android:id="@+id/productDetails"
         android:label="Details of the product"
-        android:name="br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment"
+        android:name="br.com.alura.aluraesporte.ui.fragment.ProductDetailsFragment"
         tools:layout="@layout/detalhes_produto" />
+
+    <fragment
+        android:id="@+id/payment"
+        android:label="Payment"
+        android:name="br.com.alura.aluraesporte.ui.fragment.PaymentFragment"
+        tools:layout="@layout/pagamento" />
+
+
 </navigation>

@@ -5,25 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
-import br.com.alura.aluraesporte.model.Produto
 import br.com.alura.aluraesporte.ui.activity.CHAVE_PRODUTO_ID
 import br.com.alura.aluraesporte.ui.viewmodel.DetalhesProdutoViewModel
 import kotlinx.android.synthetic.main.detalhes_produto.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class DetalhesProdutoFragment : Fragment() {
+class ProductDetailsFragment : Fragment() {
 
     private val produtoId by lazy {
         arguments?.getLong(CHAVE_PRODUTO_ID)
             ?: throw IllegalArgumentException(ID_PRODUTO_INVALIDO)
     }
-    private val viewModel: DetalhesProdutoViewModel by viewModel(parametersOf(produtoId).component1())
-    var quandoProdutoComprado: (produto: Produto) -> Unit = {}
+    private val viewModel: DetalhesProdutoViewModel by viewModel { parametersOf(produtoId) }
 
+    private val navController by lazy {
+        findNavController()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,23 +39,31 @@ class DetalhesProdutoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        buscaProduto()
-        configuraBotaoComprar()
+        searchProduct()
+        setUpBuyButton()
     }
 
-    private fun configuraBotaoComprar() {
+    private fun setUpBuyButton() {
         detalhes_produto_botao_comprar.setOnClickListener {
-            viewModel.produtoEncontrado.value?.let(quandoProdutoComprado)
+            viewModel.produtoEncontrado.value?.let {
+                goToPayment()
+            }
         }
     }
 
-    private fun buscaProduto() {
-        viewModel.produtoEncontrado.observe(viewLifecycleOwner, Observer {
+    private fun goToPayment() {
+        val data = Bundle()
+        data.putLong(CHAVE_PRODUTO_ID, produtoId)
+        navController.navigate(R.id.payment, data)
+    }
+
+    private fun searchProduct() {
+        viewModel.produtoEncontrado.observe(viewLifecycleOwner) {
             it?.let { produto ->
                 detalhes_produto_nome.text = produto.nome
                 detalhes_produto_preco.text = produto.preco.formatParaMoedaBrasileira()
             }
-        })
+        }
     }
 
 }

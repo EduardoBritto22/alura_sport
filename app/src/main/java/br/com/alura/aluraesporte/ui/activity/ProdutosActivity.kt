@@ -4,16 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.alura.aluraesporte.R
 
-private const val COMPRA_REALIZADA = "Compra realizada"
-
 class ProdutosActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.produtos_activity)
-        if (savedInstanceState == null) {
-
-        }
     }
 
 

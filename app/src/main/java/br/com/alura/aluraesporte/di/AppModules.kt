@@ -9,9 +9,9 @@ import br.com.alura.aluraesporte.database.dao.ProdutoDAO
 import br.com.alura.aluraesporte.model.Produto
 import br.com.alura.aluraesporte.repository.PagamentoRepository
 import br.com.alura.aluraesporte.repository.ProdutoRepository
-import br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment
-import br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment
-import br.com.alura.aluraesporte.ui.fragment.PagamentoFragment
+import br.com.alura.aluraesporte.ui.fragment.ProductDetailsFragment
+import br.com.alura.aluraesporte.ui.fragment.ProductsListFragment
+import br.com.alura.aluraesporte.ui.fragment.PaymentFragment
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProdutosAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.DetalhesProdutoViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.dsl.viewModel
 //import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import org.koin.core.parameter.parametersOf
 import java.math.BigDecimal
 
 private const val NOME_BANCO_DE_DADOS = "aluraesporte.db"
@@ -80,14 +79,14 @@ val daoModule = module {
 }
 
 val uiModule = module {
-    factory<DetalhesProdutoFragment> { DetalhesProdutoFragment() }
-    factory<ListaProdutosFragment> { ListaProdutosFragment() }
-    factory<PagamentoFragment> { PagamentoFragment() }
+    factory<ProductDetailsFragment> { ProductDetailsFragment() }
+    factory<ProductsListFragment> { ProductsListFragment() }
+    factory<PaymentFragment> { PaymentFragment() }
     factory<ProdutosAdapter> { ProdutosAdapter(get()) }
 }
 
 val viewModelModule = module {
     viewModel<ProdutosViewModel> { ProdutosViewModel(get()) }
-    viewModel<DetalhesProdutoViewModel> { DetalhesProdutoViewModel(produtoId = parametersOf().get(),get()) }
+    viewModel<DetalhesProdutoViewModel> { (id: Long) -> DetalhesProdutoViewModel(produtoId = id,get()) }
     viewModel<PagamentoViewModel> { PagamentoViewModel(get(), get()) }
 }
