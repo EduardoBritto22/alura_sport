@@ -9,19 +9,33 @@
         android:id="@+id/productsList"
         android:name="br.com.alura.aluraesporte.ui.fragment.ProductsListFragment"
         tools:layout="@layout/lista_produtos"
-        android:label="List of products" />
+        android:label="List of products" >
+        <action
+            android:id="@+id/action_productsList_to_productDetails"
+            app:destination="@id/productDetails" />
+    </fragment>
 
     <fragment
         android:id="@+id/productDetails"
         android:label="Details of the product"
         android:name="br.com.alura.aluraesporte.ui.fragment.ProductDetailsFragment"
-        tools:layout="@layout/detalhes_produto" />
+        tools:layout="@layout/detalhes_produto" >
+        <action
+            android:id="@+id/action_productDetails_to_payment"
+            app:destination="@id/payment" />
+    </fragment>
 
     <fragment
         android:id="@+id/payment"
         android:label="Payment"
         android:name="br.com.alura.aluraesporte.ui.fragment.PaymentFragment"
-        tools:layout="@layout/pagamento" />
+        tools:layout="@layout/pagamento" >
+        <action
+            android:id="@+id/action_payment_to_productsList"
+            app:destination="@id/productsList"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/nav_graph" />
+    </fragment>
 
 
 </navigation>

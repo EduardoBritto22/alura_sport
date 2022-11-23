@@ -85,7 +85,7 @@ class PaymentFragment : Fragment() {
     }
 
     private fun goToProductsList() {
-        navController.navigate(R.id.productsList)
+        navController.navigate(R.id.action_payment_to_productsList)
     }
 
     private fun createPayment(): Pagamento? {
