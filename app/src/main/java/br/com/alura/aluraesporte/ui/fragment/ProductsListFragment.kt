@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import br.com.alura.aluraesporte.R
-import br.com.alura.aluraesporte.ui.activity.CHAVE_PRODUTO_ID
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProdutosAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.ProdutosViewModel
 import kotlinx.android.synthetic.main.lista_produtos.*
@@ -63,9 +62,10 @@ class ProductsListFragment : Fragment() {
     }
 
     private fun gotToProductDetails(productId: Long) {
-        val data = Bundle()
-        data.putLong(CHAVE_PRODUTO_ID, productId)
-        navController.navigate(R.id.action_productsList_to_productDetails, data)
+
+        val directions =
+            ProductsListFragmentDirections.actionProductsListToProductDetails(productId)
+        navController.navigate(directions)
     }
 
 }

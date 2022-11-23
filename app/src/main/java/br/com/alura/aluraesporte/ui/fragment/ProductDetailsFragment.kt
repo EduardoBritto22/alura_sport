@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
-import br.com.alura.aluraesporte.ui.activity.CHAVE_PRODUTO_ID
 import br.com.alura.aluraesporte.ui.viewmodel.DetalhesProdutoViewModel
 import kotlinx.android.synthetic.main.detalhes_produto.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -16,11 +16,9 @@ import org.koin.core.parameter.parametersOf
 
 class ProductDetailsFragment : Fragment() {
 
-    private val produtoId by lazy {
-        arguments?.getLong(CHAVE_PRODUTO_ID)
-            ?: throw IllegalArgumentException(ID_PRODUTO_INVALIDO)
-    }
-    private val viewModel: DetalhesProdutoViewModel by viewModel { parametersOf(produtoId) }
+    private val arguments by navArgs<ProductDetailsFragmentArgs>()
+    private val productId by lazy { arguments.productId }
+    private val viewModel: DetalhesProdutoViewModel by viewModel { parametersOf(productId) }
 
     private val navController by lazy {
         findNavController()
@@ -52,9 +50,9 @@ class ProductDetailsFragment : Fragment() {
     }
 
     private fun goToPayment() {
-        val data = Bundle()
-        data.putLong(CHAVE_PRODUTO_ID, produtoId)
-        navController.navigate(R.id.action_productDetails_to_payment, data)
+        val directions =
+        ProductDetailsFragmentDirections.actionProductDetailsToPayment(productId)
+        navController.navigate(directions)
     }
 
     private fun searchProduct() {

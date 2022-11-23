@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
 import br.com.alura.aluraesporte.model.Pagamento
 import br.com.alura.aluraesporte.model.Produto
-import br.com.alura.aluraesporte.ui.activity.CHAVE_PRODUTO_ID
 import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
 import kotlinx.android.synthetic.main.pagamento.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -21,10 +21,8 @@ private const val COMPRA_REALIZADA = "Compra realizada"
 
 class PaymentFragment : Fragment() {
 
-    private val produtoId by lazy {
-        arguments?.getLong(CHAVE_PRODUTO_ID)
-            ?: throw IllegalArgumentException(ID_PRODUTO_INVALIDO)
-    }
+    private val arguments by navArgs<PaymentFragmentArgs>()
+    private val productId by lazy { arguments.productId }
     private val viewModel: PagamentoViewModel by viewModel()
     private lateinit var produtoEscolhido: Produto
     private val navController by lazy {
@@ -49,7 +47,7 @@ class PaymentFragment : Fragment() {
     }
 
     private fun buscaProduto() {
-        viewModel.buscaProdutoPorId(produtoId).observe(viewLifecycleOwner) {
+        viewModel.buscaProdutoPorId(productId).observe(viewLifecycleOwner) {
             it?.let { produtoEncontrado ->
                 produtoEscolhido = produtoEncontrado
                 pagamento_preco.text = produtoEncontrado.preco
@@ -85,7 +83,7 @@ class PaymentFragment : Fragment() {
     }
 
     private fun goToProductsList() {
-        navController.navigate(R.id.action_payment_to_productsList)
+        navController.navigate(PaymentFragmentDirections.actionPaymentToProductsList())
     }
 
     private fun createPayment(): Pagamento? {
@@ -107,7 +105,7 @@ class PaymentFragment : Fragment() {
             numeroCartao = numeroCartao.toInt(),
             dataValidade = dataValidade,
             cvc = cvc.toInt(),
-            produtoId = produtoId,
+            produtoId = productId,
             preco = produtoEscolhido.preco
         )
     } catch (e: NumberFormatException) {

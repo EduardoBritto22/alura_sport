@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_productDetails_to_payment"
             app:destination="@id/payment" />
+        <argument
+            android:name="productId"
+            app:argType="long" />
     </fragment>
 
     <fragment
@@ -35,6 +38,9 @@
             app:destination="@id/productsList"
             app:launchSingleTop="false"
             app:popUpTo="@id/nav_graph" />
+        <argument
+            android:name="productId"
+            app:argType="long" />
     </fragment>
 
 
