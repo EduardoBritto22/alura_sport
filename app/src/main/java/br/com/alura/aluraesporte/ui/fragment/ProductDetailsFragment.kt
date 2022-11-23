@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
-import br.com.alura.aluraesporte.ui.viewmodel.DetalhesProdutoViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.ProductDetailsViewModel
 import kotlinx.android.synthetic.main.detalhes_produto.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -18,7 +18,7 @@ class ProductDetailsFragment : Fragment() {
 
     private val arguments by navArgs<ProductDetailsFragmentArgs>()
     private val productId by lazy { arguments.productId }
-    private val viewModel: DetalhesProdutoViewModel by viewModel { parametersOf(productId) }
+    private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(productId) }
 
     private val navController by lazy {
         findNavController()

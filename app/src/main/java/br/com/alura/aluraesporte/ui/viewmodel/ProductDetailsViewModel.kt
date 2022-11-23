@@ -3,7 +3,7 @@ package br.com.alura.aluraesporte.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import br.com.alura.aluraesporte.repository.ProdutoRepository
 
-class DetalhesProdutoViewModel(
+class ProductDetailsViewModel(
     produtoId: Long,
     repository: ProdutoRepository
 ) : ViewModel() {

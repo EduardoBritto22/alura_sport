@@ -13,7 +13,7 @@ import br.com.alura.aluraesporte.ui.fragment.ProductDetailsFragment
 import br.com.alura.aluraesporte.ui.fragment.ProductsListFragment
 import br.com.alura.aluraesporte.ui.fragment.PaymentFragment
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProdutosAdapter
-import br.com.alura.aluraesporte.ui.viewmodel.DetalhesProdutoViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.ProductDetailsViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProdutosViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -87,6 +87,6 @@ val uiModule = module {
 
 val viewModelModule = module {
     viewModel<ProdutosViewModel> { ProdutosViewModel(get()) }
-    viewModel<DetalhesProdutoViewModel> { (id: Long) -> DetalhesProdutoViewModel(produtoId = id,get()) }
+    viewModel<ProductDetailsViewModel> { (id: Long) -> ProductDetailsViewModel(produtoId = id,get()) }
     viewModel<PagamentoViewModel> { PagamentoViewModel(get(), get()) }
 }
