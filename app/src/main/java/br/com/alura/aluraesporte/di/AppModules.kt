@@ -1,5 +1,6 @@
 package br.com.alura.aluraesporte.di
 
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -7,12 +8,14 @@ import br.com.alura.aluraesporte.database.AppDatabase
 import br.com.alura.aluraesporte.database.dao.PagamentoDAO
 import br.com.alura.aluraesporte.database.dao.ProdutoDAO
 import br.com.alura.aluraesporte.model.Produto
+import br.com.alura.aluraesporte.repository.LoginRepository
 import br.com.alura.aluraesporte.repository.PagamentoRepository
 import br.com.alura.aluraesporte.repository.ProdutoRepository
 import br.com.alura.aluraesporte.ui.fragment.ProductDetailsFragment
 import br.com.alura.aluraesporte.ui.fragment.ProductsListFragment
 import br.com.alura.aluraesporte.ui.fragment.PaymentFragment
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProdutosAdapter
+import br.com.alura.aluraesporte.ui.viewmodel.LoginViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductDetailsViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProdutosViewModel
@@ -20,7 +23,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.dsl.viewModel
-//import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import java.math.BigDecimal
 
@@ -76,6 +78,8 @@ val daoModule = module {
     single<PagamentoDAO> { get<AppDatabase>().pagamentoDao() }
     single<ProdutoRepository> { ProdutoRepository(get()) }
     single<PagamentoRepository> { PagamentoRepository(get()) }
+    single { LoginRepository(get()) }
+    single { PreferenceManager.getDefaultSharedPreferences(get()) }
 }
 
 val uiModule = module {
@@ -89,4 +93,5 @@ val viewModelModule = module {
     viewModel<ProdutosViewModel> { ProdutosViewModel(get()) }
     viewModel<ProductDetailsViewModel> { (id: Long) -> ProductDetailsViewModel(produtoId = id,get()) }
     viewModel<PagamentoViewModel> { PagamentoViewModel(get(), get()) }
+    viewModel { LoginViewModel(get()) }
 }

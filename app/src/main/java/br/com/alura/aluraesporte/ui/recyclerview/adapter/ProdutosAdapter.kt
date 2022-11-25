@@ -31,7 +31,7 @@ class ProdutosAdapter(
         holder.vincula(produtos[position])
     }
 
-    fun atualiza(produtosNovos: List<Produto>) {
+    fun update(produtosNovos: List<Produto>) {
         notifyItemRangeRemoved(0, produtos.size)
         produtos.clear()
         produtos.addAll(produtosNovos)
