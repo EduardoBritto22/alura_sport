@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
@@ -19,15 +17,13 @@ import org.koin.android.viewmodel.ext.android.viewModel
 private const val FALHA_AO_CRIAR_PAGAMENTO = "Falha ao criar pagamento"
 private const val COMPRA_REALIZADA = "Compra realizada"
 
-class PaymentFragment : Fragment() {
+class PaymentFragment : BaseFragment() {
 
     private val arguments by navArgs<PaymentFragmentArgs>()
     private val productId by lazy { arguments.productId }
     private val viewModel: PagamentoViewModel by viewModel()
     private lateinit var produtoEscolhido: Produto
-    private val navController by lazy {
-        findNavController()
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,7 +54,7 @@ class PaymentFragment : Fragment() {
 
     private fun configuraBotaoConfirmaPagamento() {
         pagamento_botao_confirma_pagamento.setOnClickListener {
-            createPayment()?.let(this::salva) ?: Toast.makeText(
+            createPayment()?.let(this::save) ?: Toast.makeText(
                 context,
                 FALHA_AO_CRIAR_PAGAMENTO,
                 Toast.LENGTH_LONG
@@ -66,7 +62,7 @@ class PaymentFragment : Fragment() {
         }
     }
 
-    private fun salva(pagamento: Pagamento) {
+    private fun save(pagamento: Pagamento) {
         if (::produtoEscolhido.isInitialized) {
             viewModel.salva(pagamento)
                 .observe(this) {

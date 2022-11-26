@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
@@ -14,15 +12,12 @@ import kotlinx.android.synthetic.main.detalhes_produto.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class ProductDetailsFragment : Fragment() {
+class ProductDetailsFragment : BaseFragment() {
 
     private val arguments by navArgs<ProductDetailsFragmentArgs>()
     private val productId by lazy { arguments.productId }
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(productId) }
 
-    private val navController by lazy {
-        findNavController()
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
