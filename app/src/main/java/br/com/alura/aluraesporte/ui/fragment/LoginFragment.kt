@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.login.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
 
     private val controller by lazy { findNavController() }
     private val viewModel: LoginViewModel by viewModel()
+    private val appStateViewModel: AppStateViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +42,9 @@ class LoginFragment : Fragment() {
         login_button_signup.setOnClickListener {
             goToSignUpUser()
         }
+
+        appStateViewModel.hasAppBar = false
+
     }
 
     private fun goToProductsList() {

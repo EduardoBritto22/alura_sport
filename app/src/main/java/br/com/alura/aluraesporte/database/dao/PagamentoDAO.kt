@@ -2,12 +2,12 @@ package br.com.alura.aluraesporte.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
-import br.com.alura.aluraesporte.model.Pagamento
+import br.com.alura.aluraesporte.model.Payment
 
 @Dao
 interface PagamentoDAO {
 
     @Insert
-    fun salva(pagamento: Pagamento) : Long
+    fun salva(payment: Payment) : Long
 
 }

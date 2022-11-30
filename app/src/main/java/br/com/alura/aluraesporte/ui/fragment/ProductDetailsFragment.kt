@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
+import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductDetailsViewModel
 import kotlinx.android.synthetic.main.detalhes_produto.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -17,6 +19,7 @@ class ProductDetailsFragment : BaseFragment() {
     private val arguments by navArgs<ProductDetailsFragmentArgs>()
     private val productId by lazy { arguments.productId }
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(productId) }
+    private val appStateViewModel: AppStateViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +37,7 @@ class ProductDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         searchProduct()
         setUpBuyButton()
+        appStateViewModel.hasAppBar = true
     }
 
     private fun setUpBuyButton() {
@@ -54,7 +58,7 @@ class ProductDetailsFragment : BaseFragment() {
         viewModel.produtoEncontrado.observe(viewLifecycleOwner) {
             it?.let { produto ->
                 detalhes_produto_nome.text = produto.nome
-                detalhes_produto_preco.text = produto.preco.formatParaMoedaBrasileira()
+                detalhes_produto_preco.text = produto.price.formatParaMoedaBrasileira()
             }
         }
     }

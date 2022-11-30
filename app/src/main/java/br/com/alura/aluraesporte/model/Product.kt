@@ -5,9 +5,9 @@ import androidx.room.PrimaryKey
 import java.math.BigDecimal
 
 @Entity
-class Produto(
+class Product(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val nome: String,
-    val preco: BigDecimal
+    val price: BigDecimal
 )
