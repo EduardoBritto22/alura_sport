@@ -78,6 +78,9 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/login"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login_to_userSignUp"
+            app:destination="@id/userSignUp" />
     </fragment>
     <action
         android:id="@+id/action_global_login"
@@ -87,7 +90,16 @@
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim"
         app:popUpTo="@id/productsList"
-        app:popUpToInclusive="true"/>
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/userSignUp"
+        android:name="br.com.alura.aluraesporte.ui.fragment.UserSignUpFragment"
+        android:label="User Sign up"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        tools:layout="@layout/user_signup" />
 
 
 </navigation>

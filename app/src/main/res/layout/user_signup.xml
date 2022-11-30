@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_usuario_id"
+        android:id="@+id/user_signin_id_user"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,50 +20,61 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/user_id"
+            android:hint="@string/name"
             android:inputType="number"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_senha"
+        android:id="@+id/user_signin_password"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        app:layout_constraintEnd_toEndOf="@id/login_usuario_id"
-        app:layout_constraintStart_toStartOf="@id/login_usuario_id"
-        app:layout_constraintTop_toBottomOf="@id/login_usuario_id"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintEnd_toEndOf="@id/user_signin_id_user"
+        app:layout_constraintStart_toStartOf="@id/user_signin_id_user"
+        app:layout_constraintTop_toBottomOf="@id/user_signin_id_user"
+        app:layout_constraintVertical_bias="0.0"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:inputType="number"
+            android:inputType="textPassword"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/user_signin_password_confirm"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        app:layout_constraintEnd_toEndOf="@id/user_signin_password"
+        app:layout_constraintStart_toStartOf="@id/user_signin_password"
+        app:layout_constraintTop_toBottomOf="@id/user_signin_password"
+        app:layout_constraintVertical_bias="0.0"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password_confirmation"
+            android:inputType="textPassword"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/login_botao_logar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/log_in_text"
-        app:layout_constraintEnd_toEndOf="@id/login_senha"
-        app:layout_constraintStart_toStartOf="@id/login_senha"
-        app:layout_constraintTop_toBottomOf="@id/login_senha" />
-
-    <Button
-        android:id="@+id/login_button_signup"
+        android:id="@+id/user_signin_save_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/sign_up_text"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="@id/login_botao_logar"
-        app:layout_constraintStart_toStartOf="@id/login_botao_logar"
-        app:layout_constraintTop_toBottomOf="@id/login_botao_logar" />
+        app:layout_constraintEnd_toEndOf="@id/user_signin_password_confirm"
+        app:layout_constraintStart_toStartOf="@id/user_signin_password_confirm"
+        app:layout_constraintTop_toBottomOf="@id/user_signin_password_confirm" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,10 +35,18 @@ class LoginFragment : Fragment() {
             viewModel.logIn()
             goToProductsList()
         }
+
+        login_button_signup.setOnClickListener {
+            goToSignUpUser()
+        }
     }
 
     private fun goToProductsList() {
         val direction = LoginFragmentDirections.actionLoginToProductsList()
+        controller.navigate(direction)
+    }
+    private fun goToSignUpUser() {
+        val direction = LoginFragmentDirections.actionLoginToUserSignUp()
         controller.navigate(direction)
     }
 

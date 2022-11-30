@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Alura Esporte</string>
+    <string name="comprar">Comprar</string>
+    <string name="data_de_validade">Data de validade</string>
+    <string name="numero_cartao">Número cartão</string>
+    <string name="confirmar_pagamento">Confirmar pagamento</string>
+    <string name="log_out">Deslogar</string>
+    <string name="user_id">Id do usuário</string>
+    <string name="password">Senha</string>
+    <string name="sign_up_text">Cadastrar</string>
+    <string name="log_in_text">Logar</string>
+    <string name="password_confirmation">Confirmar senha</string>
+    <string name="name">Nome</string>
+</resources>

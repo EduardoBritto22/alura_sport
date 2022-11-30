@@ -6,9 +6,11 @@
         <entry key="app/src/main/res/drawable-anydpi/ic_action_logout.xml" value="0.3325" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.1" />
         <entry key="app/src/main/res/layout/lista_produtos.xml" value="0.35260416666666666" />
-        <entry key="app/src/main/res/layout/login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/login.xml" value="0.17147922998986828" />
         <entry key="app/src/main/res/layout/main_activity.xml" value="0.1308876811594203" />
         <entry key="app/src/main/res/layout/pagamento.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/user_signin.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/user_signup.xml" value="0.21927083333333333" />
         <entry key="app/src/main/res/menu/menu_products_list.xml" value="0.36614583333333334" />
       </map>
     </option>
