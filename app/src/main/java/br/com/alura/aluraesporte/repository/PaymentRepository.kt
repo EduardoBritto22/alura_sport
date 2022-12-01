@@ -9,12 +9,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class PagamentoRepository(private val dao: PagamentoDAO) {
+class PaymentRepository(private val dao: PagamentoDAO) {
 
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.IO + job)
 
-    fun salva(payment: Payment): LiveData<Resource<Long>> {
+    fun save(payment: Payment): LiveData<Resource<Long>> {
         return MutableLiveData<Resource<Long>>().also { liveDate ->
             scope.launch {
                 val idPagamento = dao.salva(payment)
@@ -22,5 +22,7 @@ class PagamentoRepository(private val dao: PagamentoDAO) {
             }
         }
     }
+
+    fun all(): LiveData<List<Payment>> = dao.all()
 
 }

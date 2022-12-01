@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
-import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
+import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
 import br.com.alura.aluraesporte.model.Payment
 import br.com.alura.aluraesporte.model.Product
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
-import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.PaymentViewModel
 import kotlinx.android.synthetic.main.pagamento.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -23,7 +23,7 @@ class PaymentFragment : BaseFragment() {
 
     private val arguments by navArgs<PaymentFragmentArgs>()
     private val productId by lazy { arguments.productId }
-    private val viewModel: PagamentoViewModel by viewModel()
+    private val viewModel: PaymentViewModel by viewModel()
     private val appStateViewModel: AppStateViewModel by sharedViewModel()
 
     private lateinit var chosenProduct: Product
@@ -48,11 +48,11 @@ class PaymentFragment : BaseFragment() {
     }
 
     private fun searchProduct() {
-        viewModel.buscaProdutoPorId(productId).observe(viewLifecycleOwner) {
+        viewModel.searchProductById(productId).observe(viewLifecycleOwner) {
             it?.let { chosenProduct ->
                 this.chosenProduct = chosenProduct
                 pagamento_preco.text = chosenProduct.price
-                    .formatParaMoedaBrasileira()
+                    .formatToBrazilianCurrency()
             }
         }
     }
@@ -69,7 +69,7 @@ class PaymentFragment : BaseFragment() {
 
     private fun save(payment: Payment) {
         if (::chosenProduct.isInitialized) {
-            viewModel.salva(payment)
+            viewModel.save(payment)
                 .observe(this) {
                     it?.dado?.let {
                         Toast.makeText(

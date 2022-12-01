@@ -17,15 +17,6 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
-            android:id="@+id/action_productsList_to_login"
-            app:destination="@id/login"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/productsList"
-            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -64,42 +55,56 @@
             android:name="productId"
             app:argType="long" />
     </fragment>
-    <fragment
-        android:id="@+id/login"
-        android:name="br.com.alura.aluraesporte.ui.fragment.LoginFragment"
-        tools:layout="@layout/login"
-        android:label="Login">
-        <action
-            android:id="@+id/action_login_to_productsList"
-            app:destination="@id/productsList"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/login"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_login_to_userSignUp"
-            app:destination="@id/userSignUp" />
-    </fragment>
     <action
         android:id="@+id/action_global_login"
-        app:destination="@id/login"
+        app:destination="@id/login_graph"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim"
         app:popUpTo="@id/productsList"
         app:popUpToInclusive="true" />
+    <navigation
+        android:id="@+id/login_graph"
+        android:label="Login flow"
+        app:startDestination="@id/login">
+        <fragment
+            android:id="@+id/login"
+            android:name="br.com.alura.aluraesporte.ui.fragment.LoginFragment"
+            android:label="Login"
+            tools:layout="@layout/login">
+            <action
+                android:id="@+id/action_login_to_productsList"
+                app:destination="@id/productsList"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
+                app:popUpTo="@id/login"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_login_to_userSignUp"
+                app:destination="@id/userSignUp" />
+        </fragment>
+        <fragment
+            android:id="@+id/userSignUp"
+            android:name="br.com.alura.aluraesporte.ui.fragment.UserSignUpFragment"
+            android:label="User Sign up"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            tools:layout="@layout/user_signup" />
+    </navigation>
     <fragment
-        android:id="@+id/userSignUp"
-        android:name="br.com.alura.aluraesporte.ui.fragment.UserSignUpFragment"
-        android:label="User Sign up"
+        android:id="@+id/paymentsList"
+        android:name="br.com.alura.aluraesporte.ui.fragment.PaymentsListFragment"
+        tools:layout="@layout/list_payments"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim"
-        tools:layout="@layout/user_signup" />
+        android:label="Payments List" />
 
 
 </navigation>

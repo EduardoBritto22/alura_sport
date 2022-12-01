@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
-import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
+import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductDetailsViewModel
 import kotlinx.android.synthetic.main.detalhes_produto.*
@@ -58,7 +58,7 @@ class ProductDetailsFragment : BaseFragment() {
         viewModel.produtoEncontrado.observe(viewLifecycleOwner) {
             it?.let { produto ->
                 detalhes_produto_nome.text = produto.nome
-                detalhes_produto_preco.text = produto.price.formatParaMoedaBrasileira()
+                detalhes_produto_preco.text = produto.price.formatToBrazilianCurrency()
             }
         }
     }

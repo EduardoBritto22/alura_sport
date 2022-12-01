@@ -9,12 +9,13 @@ import br.com.alura.aluraesporte.database.dao.PagamentoDAO
 import br.com.alura.aluraesporte.database.dao.ProdutoDAO
 import br.com.alura.aluraesporte.model.Product
 import br.com.alura.aluraesporte.repository.LoginRepository
-import br.com.alura.aluraesporte.repository.PagamentoRepository
-import br.com.alura.aluraesporte.repository.ProdutoRepository
+import br.com.alura.aluraesporte.repository.PaymentRepository
+import br.com.alura.aluraesporte.repository.ProductRepository
 import br.com.alura.aluraesporte.ui.fragment.ProductDetailsFragment
 import br.com.alura.aluraesporte.ui.fragment.ProductsListFragment
 import br.com.alura.aluraesporte.ui.fragment.PaymentFragment
-import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProdutosAdapter
+import br.com.alura.aluraesporte.ui.recyclerview.adapter.PaymentListAdapter
+import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProductsAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -73,8 +74,8 @@ val databaseModule = module {
 val daoModule = module {
     single<ProdutoDAO> { get<AppDatabase>().produtoDao() }
     single<PagamentoDAO> { get<AppDatabase>().pagamentoDao() }
-    single<ProdutoRepository> { ProdutoRepository(get()) }
-    single<PagamentoRepository> { PagamentoRepository(get()) }
+    single<ProductRepository> { ProductRepository(get()) }
+    single<PaymentRepository> { PaymentRepository(get()) }
     single { LoginRepository(get()) }
     single { PreferenceManager.getDefaultSharedPreferences(get()) }
 }
@@ -83,13 +84,14 @@ val uiModule = module {
     factory<ProductDetailsFragment> { ProductDetailsFragment() }
     factory<ProductsListFragment> { ProductsListFragment() }
     factory<PaymentFragment> { PaymentFragment() }
-    factory<ProdutosAdapter> { ProdutosAdapter(get()) }
+    factory<ProductsAdapter> { ProductsAdapter(get()) }
+    factory { PaymentListAdapter(get()) }
 }
 
 val viewModelModule = module {
-    viewModel<ProdutosViewModel> { ProdutosViewModel(get()) }
+    viewModel<ProductsViewModel> { ProductsViewModel(get()) }
     viewModel<ProductDetailsViewModel> { (id: Long) -> ProductDetailsViewModel(produtoId = id,get()) }
-    viewModel<PagamentoViewModel> { PagamentoViewModel(get(), get()) }
+    viewModel<PaymentViewModel> { PaymentViewModel(get(), get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { AppStateViewModel() }
 }

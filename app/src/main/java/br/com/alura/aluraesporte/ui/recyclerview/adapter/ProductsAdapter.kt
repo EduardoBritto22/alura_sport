@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.aluraesporte.R
-import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
+import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
 import br.com.alura.aluraesporte.model.Product
 import kotlinx.android.synthetic.main.item_produto.view.*
 
-class ProdutosAdapter(
+class ProductsAdapter(
     private val context: Context,
     private val products: MutableList<Product> = mutableListOf(),
     var onItemClickListener: (product: Product) -> Unit = {}
-) : RecyclerView.Adapter<ProdutosAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewCriada = LayoutInflater.from(context).inflate(
@@ -56,7 +56,7 @@ class ProdutosAdapter(
         fun vincula(product: Product) {
             this.product = product
             campoNome.text = product.nome
-            campoPreco.text = product.price.formatParaMoedaBrasileira()
+            campoPreco.text = product.price.formatToBrazilianCurrency()
         }
 
     }
