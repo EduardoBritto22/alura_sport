@@ -5,15 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class AppStateViewModel : ViewModel() {
-    val appBar: LiveData<Boolean> get() = _appBar
-    private var _appBar: MutableLiveData<Boolean> =
-        MutableLiveData<Boolean>().also {
-            it.value = hasAppBar
+    val components: LiveData<VisualComponents> get() = _components
+
+    private var _components: MutableLiveData<VisualComponents> =
+        MutableLiveData<VisualComponents>().also {
+            it.value = hasComponents
         }
 
-    var hasAppBar: Boolean = false
+    var hasComponents: VisualComponents = VisualComponents()
         set(value) {
             field = value
-            _appBar.value = value
+            _components.value = value
         }
 }
+
+class VisualComponents (
+    val appBar: Boolean = false,
+    val bottomNavigation: Boolean = false
+)

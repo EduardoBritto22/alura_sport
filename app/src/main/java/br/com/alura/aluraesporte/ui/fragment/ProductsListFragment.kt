@@ -10,6 +10,7 @@ import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProductsAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductsViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
 import kotlinx.android.synthetic.main.lista_produtos.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -40,7 +41,10 @@ class ProductsListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
-        appStateViewModel.hasAppBar = true
+        appStateViewModel.hasComponents = VisualComponents(
+            appBar = true,
+            bottomNavigation = true
+        )
     }
 
     private fun searchProducts() {

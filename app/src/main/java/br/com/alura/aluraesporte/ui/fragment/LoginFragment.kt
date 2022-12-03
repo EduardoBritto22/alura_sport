@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.LoginViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
 import kotlinx.android.synthetic.main.login.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -43,7 +44,7 @@ class LoginFragment : Fragment() {
             goToSignUpUser()
         }
 
-        appStateViewModel.hasAppBar = false
+        appStateViewModel.hasComponents = VisualComponents()
 
     }
 

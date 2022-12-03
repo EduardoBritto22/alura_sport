@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
 import kotlinx.android.synthetic.main.user_signup.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -38,7 +39,7 @@ class UserSignUpFragment : Fragment() {
         user_signin_save_button.setOnClickListener {
             controller.popBackStack()
         }
-        appStateViewModel.hasAppBar = false
+        appStateViewModel.hasComponents = VisualComponents()
     }
 
 }

@@ -9,6 +9,7 @@ import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductDetailsViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
 import kotlinx.android.synthetic.main.detalhes_produto.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -37,7 +38,7 @@ class ProductDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         searchProduct()
         setUpBuyButton()
-        appStateViewModel.hasAppBar = true
+        appStateViewModel.hasComponents = VisualComponents(appBar = true)
     }
 
     private fun setUpBuyButton() {

@@ -12,6 +12,7 @@ import br.com.alura.aluraesporte.model.Payment
 import br.com.alura.aluraesporte.model.Product
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.PaymentViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
 import kotlinx.android.synthetic.main.pagamento.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -44,7 +45,7 @@ class PaymentFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpConfirmPaymentButton()
         searchProduct()
-        appStateViewModel.hasAppBar = true
+        appStateViewModel.hasComponents = VisualComponents(appBar = true)
     }
 
     private fun searchProduct() {
