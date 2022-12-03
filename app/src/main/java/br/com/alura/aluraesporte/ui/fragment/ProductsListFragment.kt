@@ -24,7 +24,6 @@ class ProductsListFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         searchProducts()
-        navController.navigate(R.id.paymentsList)
     }
 
     override fun onCreateView(

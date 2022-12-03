@@ -12,4 +12,6 @@
     <string name="log_in_text">Logar</string>
     <string name="password_confirmation">Confirmar senha</string>
     <string name="name">Nome</string>
+    <string name="products_text">Produtos</string>
+    <string name="payments_text">Pagamentos</string>
 </resources>
