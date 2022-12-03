@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
 }
 android {
     compileSdk 33
@@ -40,6 +41,7 @@ dependencies {
 
     // Koin main features for Android
     //implementation "io.insert-koin:koin-android:$koin_android_version"
+
     implementation "io.insert-koin:koin-android-viewmodel:2.2.2"
     implementation "io.insert-koin:koin-core:2.0.1"
 
@@ -63,4 +65,10 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
+
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
 }

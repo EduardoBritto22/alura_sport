@@ -17,6 +17,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+        setUpNavController()
+    }
+
+    private fun setUpNavController() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             title = destination.label
             viewModel.components.observe(this) {
