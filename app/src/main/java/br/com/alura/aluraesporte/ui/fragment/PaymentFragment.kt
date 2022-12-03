@@ -13,12 +13,12 @@ import br.com.alura.aluraesporte.model.Product
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.PaymentViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
-import kotlinx.android.synthetic.main.pagamento.*
+import kotlinx.android.synthetic.main.payment.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-private const val FALHA_AO_CRIAR_PAGAMENTO = "Falha ao criar pagamento"
-private const val COMPRA_REALIZADA = "Compra realizada"
+private const val FAIL_TO_CREATE_PAYMENT = "Fail to create payment"
+private const val COMPRA_REALIZADA = "Copra realizada"
 
 class PaymentFragment : BaseFragment() {
 
@@ -35,7 +35,7 @@ class PaymentFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(
-            R.layout.pagamento,
+            R.layout.payment,
             container,
             false
         )
@@ -52,17 +52,17 @@ class PaymentFragment : BaseFragment() {
         viewModel.searchProductById(productId).observe(viewLifecycleOwner) {
             it?.let { chosenProduct ->
                 this.chosenProduct = chosenProduct
-                pagamento_preco.text = chosenProduct.price
+                payment_price.text = chosenProduct.price
                     .formatToBrazilianCurrency()
             }
         }
     }
 
     private fun setUpConfirmPaymentButton() {
-        pagamento_botao_confirma_pagamento.setOnClickListener {
+        payment_button_confirm_payment.setOnClickListener {
             createPayment()?.let(this::save) ?: Toast.makeText(
                 context,
-                FALHA_AO_CRIAR_PAGAMENTO,
+                FAIL_TO_CREATE_PAYMENT,
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -89,11 +89,11 @@ class PaymentFragment : BaseFragment() {
     }
 
     private fun createPayment(): Payment? {
-        val cardNumber = pagamento_numero_cartao
+        val cardNumber = payment_card_number
             .editText?.text.toString()
-        val validityDate = pagamento_data_validade
+        val validityDate = payment_date_validity
             .editText?.text.toString()
-        val cvc = pagamento_cvc
+        val cvc = payment_cvc
             .editText?.text.toString()
         return generatePayment(cardNumber, validityDate, cvc)
     }

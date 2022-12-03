@@ -5,12 +5,11 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/user_signin_id_user"
+        android:id="@+id/user_signup_email"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +19,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/name"
-            android:inputType="number"
+            android:hint="@string/email_text"
+            android:inputType="textEmailAddress"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -31,10 +30,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        app:layout_constraintEnd_toEndOf="@id/user_signin_id_user"
-        app:layout_constraintStart_toStartOf="@id/user_signin_id_user"
-        app:layout_constraintTop_toBottomOf="@id/user_signin_id_user"
+        app:layout_constraintEnd_toEndOf="@id/user_signup_email"
+        app:layout_constraintStart_toStartOf="@id/user_signup_email"
+        app:layout_constraintTop_toBottomOf="@id/user_signup_email"
         app:layout_constraintVertical_bias="0.0"
         app:passwordToggleEnabled="true">
 
@@ -52,7 +50,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         app:layout_constraintEnd_toEndOf="@id/user_signin_password"
         app:layout_constraintStart_toStartOf="@id/user_signin_password"
         app:layout_constraintTop_toBottomOf="@id/user_signin_password"

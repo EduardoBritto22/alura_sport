@@ -40,7 +40,7 @@
         android:id="@+id/payment"
         android:label="Payment"
         android:name="br.com.alura.aluraesporte.ui.fragment.PaymentFragment"
-        tools:layout="@layout/pagamento">
+        tools:layout="@layout/payment">
         <action
             android:id="@+id/action_payment_to_productsList"
             app:destination="@id/productsList"
