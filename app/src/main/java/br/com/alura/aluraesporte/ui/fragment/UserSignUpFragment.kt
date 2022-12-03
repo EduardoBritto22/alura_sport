@@ -8,9 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.RegisterUserViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.user_signup.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class UserSignUpFragment : Fragment() {
 
@@ -18,7 +21,7 @@ class UserSignUpFragment : Fragment() {
         findNavController()
     }
     private val appStateViewModel: AppStateViewModel by sharedViewModel()
-
+    private val viewModel: RegisterUserViewModel by viewModel()
 
 
     override fun onCreateView(
@@ -33,11 +36,27 @@ class UserSignUpFragment : Fragment() {
         )
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        user_signin_save_button.setOnClickListener {
-            controller.popBackStack()
+        user_signup_save_button.setOnClickListener {
+
+            val email = user_signup_email.editText?.text.toString()
+            val password = user_signup_password.editText?.text.toString()
+
+            viewModel.registerUser(email, password).observe(viewLifecycleOwner){
+                it?.let { registered ->
+                    if(registered){
+                        controller.popBackStack()
+                    } else {
+                        Snackbar.make(
+                            view,
+                            "Failure to sign up the user",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+
         }
         appStateViewModel.hasComponents = VisualComponents()
     }
