@@ -5,29 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
-import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
-import br.com.alura.aluraesporte.model.Pagamento
-import br.com.alura.aluraesporte.model.Produto
-import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
+import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
+import br.com.alura.aluraesporte.model.Payment
+import br.com.alura.aluraesporte.model.Product
+import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.PaymentViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
 import kotlinx.android.synthetic.main.pagamento.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val FALHA_AO_CRIAR_PAGAMENTO = "Falha ao criar pagamento"
 private const val COMPRA_REALIZADA = "Compra realizada"
 
-class PaymentFragment : Fragment() {
+class PaymentFragment : BaseFragment() {
 
     private val arguments by navArgs<PaymentFragmentArgs>()
     private val productId by lazy { arguments.productId }
-    private val viewModel: PagamentoViewModel by viewModel()
-    private lateinit var produtoEscolhido: Produto
-    private val navController by lazy {
-        findNavController()
-    }
+    private val viewModel: PaymentViewModel by viewModel()
+    private val appStateViewModel: AppStateViewModel by sharedViewModel()
+
+    private lateinit var chosenProduct: Product
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,23 +43,24 @@ class PaymentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        configuraBotaoConfirmaPagamento()
-        buscaProduto()
+        setUpConfirmPaymentButton()
+        searchProduct()
+        appStateViewModel.hasComponents = VisualComponents(appBar = true)
     }
 
-    private fun buscaProduto() {
-        viewModel.buscaProdutoPorId(productId).observe(viewLifecycleOwner) {
-            it?.let { produtoEncontrado ->
-                produtoEscolhido = produtoEncontrado
-                pagamento_preco.text = produtoEncontrado.preco
-                    .formatParaMoedaBrasileira()
+    private fun searchProduct() {
+        viewModel.searchProductById(productId).observe(viewLifecycleOwner) {
+            it?.let { chosenProduct ->
+                this.chosenProduct = chosenProduct
+                pagamento_preco.text = chosenProduct.price
+                    .formatToBrazilianCurrency()
             }
         }
     }
 
-    private fun configuraBotaoConfirmaPagamento() {
+    private fun setUpConfirmPaymentButton() {
         pagamento_botao_confirma_pagamento.setOnClickListener {
-            createPayment()?.let(this::salva) ?: Toast.makeText(
+            createPayment()?.let(this::save) ?: Toast.makeText(
                 context,
                 FALHA_AO_CRIAR_PAGAMENTO,
                 Toast.LENGTH_LONG
@@ -66,9 +68,9 @@ class PaymentFragment : Fragment() {
         }
     }
 
-    private fun salva(pagamento: Pagamento) {
-        if (::produtoEscolhido.isInitialized) {
-            viewModel.salva(pagamento)
+    private fun save(payment: Payment) {
+        if (::chosenProduct.isInitialized) {
+            viewModel.save(payment)
                 .observe(this) {
                     it?.dado?.let {
                         Toast.makeText(
@@ -86,27 +88,27 @@ class PaymentFragment : Fragment() {
         navController.navigate(PaymentFragmentDirections.actionPaymentToProductsList())
     }
 
-    private fun createPayment(): Pagamento? {
-        val numeroCartao = pagamento_numero_cartao
+    private fun createPayment(): Payment? {
+        val cardNumber = pagamento_numero_cartao
             .editText?.text.toString()
-        val dataValidade = pagamento_data_validade
+        val validityDate = pagamento_data_validade
             .editText?.text.toString()
         val cvc = pagamento_cvc
             .editText?.text.toString()
-        return generatePayment(numeroCartao, dataValidade, cvc)
+        return generatePayment(cardNumber, validityDate, cvc)
     }
 
     private fun generatePayment(
-        numeroCartao: String,
-        dataValidade: String,
+        cardNumber: String,
+        validityDate: String,
         cvc: String
-    ): Pagamento? = try {
-        Pagamento(
-            numeroCartao = numeroCartao.toInt(),
-            dataValidade = dataValidade,
+    ): Payment? = try {
+        Payment(
+            cardNumber = cardNumber.toInt(),
+            validityDate = validityDate,
             cvc = cvc.toInt(),
             produtoId = productId,
-            preco = produtoEscolhido.preco
+            price = chosenProduct.price
         )
     } catch (e: NumberFormatException) {
         null

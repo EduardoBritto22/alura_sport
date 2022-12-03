@@ -4,9 +4,9 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.util.*
 
-fun BigDecimal.formatParaMoedaBrasileira(): String {
-    val formatoBrasileiro = DecimalFormat
+fun BigDecimal.formatToBrazilianCurrency(): String {
+    val brazilianFormat = DecimalFormat
         .getCurrencyInstance(Locale("pt", "br"))
-    return formatoBrasileiro
+    return brazilianFormat
         .format(this)
 }

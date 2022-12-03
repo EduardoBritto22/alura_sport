@@ -8,18 +8,18 @@ import java.math.BigDecimal
 
 @Entity(
     foreignKeys = [ForeignKey(
-        entity = Produto::class,
+        entity = Product::class,
         parentColumns = ["id"],
         childColumns = ["produtoId"]
     )],
     indices = [Index("produtoId")]
 )
-class Pagamento(
+class Payment(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val numeroCartao: Int,
-    val dataValidade: String,
+    val cardNumber: Int,
+    val validityDate: String,
     val cvc: Int,
-    val preco: BigDecimal,
+    val price: BigDecimal,
     val produtoId: Long
 )

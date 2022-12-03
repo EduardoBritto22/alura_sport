@@ -1,13 +1,18 @@
 package br.com.alura.aluraesporte.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
-import br.com.alura.aluraesporte.model.Pagamento
+import androidx.room.Query
+import br.com.alura.aluraesporte.model.Payment
 
 @Dao
 interface PagamentoDAO {
 
     @Insert
-    fun salva(pagamento: Pagamento) : Long
+    fun salva(payment: Payment) : Long
+
+    @Query("SELECT * FROM Payment")
+    fun all(): LiveData<List<Payment>>
 
 }

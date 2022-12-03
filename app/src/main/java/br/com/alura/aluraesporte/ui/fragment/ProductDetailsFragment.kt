@@ -4,25 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
-import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
+import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
+import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductDetailsViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
 import kotlinx.android.synthetic.main.detalhes_produto.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class ProductDetailsFragment : Fragment() {
+class ProductDetailsFragment : BaseFragment() {
 
     private val arguments by navArgs<ProductDetailsFragmentArgs>()
     private val productId by lazy { arguments.productId }
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(productId) }
+    private val appStateViewModel: AppStateViewModel by sharedViewModel()
 
-    private val navController by lazy {
-        findNavController()
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +38,7 @@ class ProductDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         searchProduct()
         setUpBuyButton()
+        appStateViewModel.hasComponents = VisualComponents(appBar = true)
     }
 
     private fun setUpBuyButton() {
@@ -59,7 +59,7 @@ class ProductDetailsFragment : Fragment() {
         viewModel.produtoEncontrado.observe(viewLifecycleOwner) {
             it?.let { produto ->
                 detalhes_produto_nome.text = produto.nome
-                detalhes_produto_preco.text = produto.preco.formatParaMoedaBrasileira()
+                detalhes_produto_preco.text = produto.price.formatToBrazilianCurrency()
             }
         }
     }

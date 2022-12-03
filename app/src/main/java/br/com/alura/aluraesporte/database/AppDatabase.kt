@@ -6,12 +6,12 @@ import androidx.room.TypeConverters
 import br.com.alura.aluraesporte.database.converter.ConversorBigDecimal
 import br.com.alura.aluraesporte.database.dao.PagamentoDAO
 import br.com.alura.aluraesporte.database.dao.ProdutoDAO
-import br.com.alura.aluraesporte.model.Pagamento
-import br.com.alura.aluraesporte.model.Produto
+import br.com.alura.aluraesporte.model.Payment
+import br.com.alura.aluraesporte.model.Product
 
 @Database(
     version = 2,
-    entities = [Produto::class, Pagamento::class],
+    entities = [Product::class, Payment::class],
     exportSchema = false
 )
 @TypeConverters(ConversorBigDecimal::class)

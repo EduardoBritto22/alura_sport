@@ -9,7 +9,7 @@
         android:id="@+id/productsList"
         android:name="br.com.alura.aluraesporte.ui.fragment.ProductsListFragment"
         tools:layout="@layout/lista_produtos"
-        android:label="List of products" >
+        android:label="List of products">
         <action
             android:id="@+id/action_productsList_to_productDetails"
             app:destination="@id/productDetails"
@@ -23,14 +23,14 @@
         android:id="@+id/productDetails"
         android:label="Details of the product"
         android:name="br.com.alura.aluraesporte.ui.fragment.ProductDetailsFragment"
-        tools:layout="@layout/detalhes_produto" >
+        tools:layout="@layout/detalhes_produto">
         <action
             android:id="@+id/action_productDetails_to_payment"
             app:destination="@id/payment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="productId"
             app:argType="long" />
@@ -40,20 +40,71 @@
         android:id="@+id/payment"
         android:label="Payment"
         android:name="br.com.alura.aluraesporte.ui.fragment.PaymentFragment"
-        tools:layout="@layout/pagamento" >
+        tools:layout="@layout/pagamento">
         <action
             android:id="@+id/action_payment_to_productsList"
             app:destination="@id/productsList"
-            app:launchSingleTop="false"
-            app:popUpTo="@id/nav_graph"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="false"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/productsList"
+            app:popUpToInclusive="true" />
         <argument
             android:name="productId"
             app:argType="long" />
     </fragment>
+    <action
+        android:id="@+id/action_global_login"
+        app:destination="@id/login_graph"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        app:popUpTo="@id/productsList"
+        app:popUpToInclusive="true" />
+    <navigation
+        android:id="@+id/login_graph"
+        android:label="Login flow"
+        app:startDestination="@id/login">
+        <fragment
+            android:id="@+id/login"
+            android:name="br.com.alura.aluraesporte.ui.fragment.LoginFragment"
+            android:label="Login"
+            tools:layout="@layout/login">
+            <action
+                android:id="@+id/action_login_to_productsList"
+                app:destination="@id/productsList"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
+                app:popUpTo="@id/login"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_login_to_userSignUp"
+                app:destination="@id/userSignUp" />
+        </fragment>
+        <fragment
+            android:id="@+id/userSignUp"
+            android:name="br.com.alura.aluraesporte.ui.fragment.UserSignUpFragment"
+            android:label="User Sign up"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            tools:layout="@layout/user_signup" />
+    </navigation>
+    <fragment
+        android:id="@+id/paymentsList"
+        android:name="br.com.alura.aluraesporte.ui.fragment.PaymentsListFragment"
+        tools:layout="@layout/list_payments"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        android:label="Payments List" />
 
 
 </navigation>

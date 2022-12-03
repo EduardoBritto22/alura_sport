@@ -5,35 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout.VERTICAL
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import br.com.alura.aluraesporte.R
-import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProdutosAdapter
-import br.com.alura.aluraesporte.ui.viewmodel.ProdutosViewModel
+import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProductsAdapter
+import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.ProductsViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
 import kotlinx.android.synthetic.main.lista_produtos.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ProductsListFragment : Fragment() {
+class ProductsListFragment : BaseFragment() {
 
-    private val viewModel: ProdutosViewModel by viewModel()
-    private val adapter: ProdutosAdapter by inject()
-    private val navController by lazy {
-        findNavController()
-    }
+    private val viewModel: ProductsViewModel by viewModel()
+    private val appStateViewModel: AppStateViewModel by sharedViewModel()
+    private val adapter: ProductsAdapter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        buscaProdutos()
-    }
-
-    private fun buscaProdutos() {
-        viewModel.buscaTodos().observe(this) { produtosEncontrados ->
-            produtosEncontrados?.let {
-                adapter.atualiza(it)
-            }
-        }
+        searchProducts()
     }
 
     override fun onCreateView(
@@ -49,10 +40,23 @@ class ProductsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        configuraRecyclerView()
+        setUpRecyclerView()
+        appStateViewModel.hasComponents = VisualComponents(
+            appBar = true,
+            bottomNavigation = true
+        )
     }
 
-    private fun configuraRecyclerView() {
+    private fun searchProducts() {
+        viewModel.searchAll().observe(this) { foundedProducts ->
+            foundedProducts?.let {
+                adapter.update(it)
+            }
+        }
+    }
+
+
+    private fun setUpRecyclerView() {
         val divisor = DividerItemDecoration(context, VERTICAL)
         lista_produtos_recyclerview.addItemDecoration(divisor)
         adapter.onItemClickListener = {selectedProduct ->

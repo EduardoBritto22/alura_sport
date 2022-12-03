@@ -1,18 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Alura Sports</string>
     <string name="comprar">Buy</string>
     <string name="data_de_validade">Validity date</string>
     <string name="numero_cartao">Card number</string>
-    <string name="numero_cvc" translatable="false">CVC</string>
     <string name="confirmar_pagamento">Confirm payment</string>
+    <string name="log_out">Log out</string>
     <string name="user_id">User Id</string>
     <string name="password">Password</string>
-    <string name="log_out">Log out</string>
     <string name="sign_up_text">Sign Up</string>
     <string name="log_in_text">Log in</string>
     <string name="password_confirmation">Confirm password</string>
     <string name="name">Name</string>
     <string name="products_text">Products</string>
     <string name="payments_text">Payments</string>
-    <!-- TODO: Remove or change this login text -->
 </resources>
