@@ -45,12 +45,13 @@ class UserSignUpFragment : Fragment() {
 
             viewModel.registerUser(email, password).observe(viewLifecycleOwner){
                 it?.let { registered ->
-                    if(registered){
+                    if(registered.data){
                         controller.popBackStack()
                     } else {
+                        val errorMessage = registered.error ?: "Failure to sign up the user"
                         Snackbar.make(
                             view,
-                            "Failure to sign up the user",
+                            errorMessage,
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }

@@ -34,19 +34,19 @@ class FirebaseAuthRepository(private val firebaseAuth: FirebaseAuth) {
         }
     }
 
-    public fun registerUser(email: String, password: String): LiveData<Boolean> {
-        val liveData = MutableLiveData<Boolean>()
+    public fun registerUser(email: String, password: String): LiveData<Resource<Boolean>> {
+        val liveData = MutableLiveData<Resource<Boolean>>()
         val task: Task<AuthResult> =
             firebaseAuth.createUserWithEmailAndPassword(email, password)
 
         task.addOnSuccessListener {
             Log.i(TAG, "registerUser: Success")
-            liveData.value = true
+            liveData.value = Resource(true)
         }
 
         task.addOnFailureListener {
             Log.i(TAG, "registerUser: Failure", it)
-            liveData.value = false
+            liveData.value = Resource(false,"Failure to register the user")
         }
 
         return liveData

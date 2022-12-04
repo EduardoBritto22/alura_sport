@@ -72,7 +72,7 @@ class PaymentFragment : BaseFragment() {
         if (::chosenProduct.isInitialized) {
             viewModel.save(payment)
                 .observe(this) {
-                    it?.dado?.let {
+                    it?.data?.let {
                         Toast.makeText(
                             context,
                             COMPRA_REALIZADA,
