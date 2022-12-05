@@ -6,32 +6,29 @@ import androidx.lifecycle.MutableLiveData
 import br.com.alura.aluraesporte.model.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
-import java.lang.Exception
 
 private const val TAG = "FirebaseAuthRepository"
 
 class FirebaseAuthRepository(private val firebaseAuth: FirebaseAuth) {
 
-    fun logoutUser(firebaseAuth: FirebaseAuth) {
+    fun logOut() {
         firebaseAuth.signOut()
     }
 
-    fun verifyUser(firebaseAuth: FirebaseAuth) {
-        val currentUser: FirebaseUser? = firebaseAuth.currentUser
-        if (currentUser != null) {
-        } else {
-        }
-    }
-
-    fun authenticateUser(firebaseAuth: FirebaseAuth) {
+    fun authenticate(user: User): LiveData<Resource<Boolean>> {
+        val liveData = MutableLiveData<Resource<Boolean>>()
         firebaseAuth.signInWithEmailAndPassword(
-            "alex@aluraesporte.com",
-            "teste123"
-        ).addOnSuccessListener {
-
-        }.addOnFailureListener {
-
+            user.email,
+            user.password
+        ).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                liveData.value = Resource(true)
+            } else {
+                Log.e(TAG, "authenticate: ", task.exception)
+                liveData.value = Resource(false,task.exception?.message)
+            }
         }
+        return liveData
     }
 
     fun registerUser(user: User): LiveData<Resource<Boolean>> {
@@ -65,6 +62,14 @@ class FirebaseAuthRepository(private val firebaseAuth: FirebaseAuth) {
             else -> "Unknown error"
         }
         return errorMessage
+    }
+
+    fun isLogged(): Boolean {
+        val currentUser: FirebaseUser? = firebaseAuth.currentUser
+        if (currentUser != null) {
+            return true
+        }
+        return false
     }
 
 

@@ -101,7 +101,7 @@ val viewModelModule = module {
     viewModel<ProductsViewModel> { ProductsViewModel(get()) }
     viewModel<ProductDetailsViewModel> { (id: Long) -> ProductDetailsViewModel(produtoId = id,get()) }
     viewModel<PaymentViewModel> { PaymentViewModel(get(), get()) }
-    viewModel { LoginViewModel(get()) }
+    viewModel { LoginViewModel(get(), get()) }
     viewModel { AppStateViewModel() }
     viewModel { RegisterUserViewModel(get()) }
 }

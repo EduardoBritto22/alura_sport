@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.extensions.snackBar
+import br.com.alura.aluraesporte.model.User
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.LoginViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
@@ -35,9 +37,20 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        login_botao_logar.setOnClickListener {
-            viewModel.logIn()
-            goToProductsList()
+        login_button_login.setOnClickListener {
+            val email = login_user_email.editText?.text.toString()
+            val password = login_password.editText?.text.toString()
+
+            viewModel.authenticate(User(email,password)).observe(viewLifecycleOwner){
+                it?.let { resource ->
+                    if(resource.data){
+                        goToProductsList()
+                    }else {
+                        view.snackBar(resource.error.orEmpty())
+                    }
+                }
+            }
+
         }
 
         login_button_signup.setOnClickListener {

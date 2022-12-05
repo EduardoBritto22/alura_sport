@@ -44,7 +44,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/login_botao_logar"
+        android:id="@+id/login_button_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -59,8 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/sign_up_text"
-        app:layout_constraintEnd_toEndOf="@id/login_botao_logar"
-        app:layout_constraintStart_toStartOf="@id/login_botao_logar"
-        app:layout_constraintTop_toBottomOf="@id/login_botao_logar"/>
+        app:layout_constraintEnd_toEndOf="@id/login_button_login"
+        app:layout_constraintStart_toStartOf="@id/login_button_login"
+        app:layout_constraintTop_toBottomOf="@id/login_button_login"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
