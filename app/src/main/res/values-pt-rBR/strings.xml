@@ -15,4 +15,5 @@
     <string name="products_text">Produtos</string>
     <string name="payments_text">Pagamentos</string>
     <string name="email_text">E-mail</string>
+    <string name="my_account_text">Minha conta</string>
 </resources>

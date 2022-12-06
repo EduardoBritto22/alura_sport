@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/productsList">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/productsList">
 
     <fragment
         android:id="@+id/productsList"
@@ -16,7 +16,7 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
@@ -30,10 +30,10 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <argument
             android:name="productId"
-            app:argType="long" />
+            app:argType="long"/>
     </fragment>
 
     <fragment
@@ -50,10 +50,10 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/productsList"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
         <argument
             android:name="productId"
-            app:argType="long" />
+            app:argType="long"/>
     </fragment>
     <action
         android:id="@+id/action_global_login"
@@ -63,7 +63,7 @@
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim"
         app:popUpTo="@id/productsList"
-        app:popUpToInclusive="true" />
+        app:popUpToInclusive="true"/>
     <navigation
         android:id="@+id/login_graph"
         android:label="Login flow"
@@ -81,10 +81,10 @@
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
                 app:popUpTo="@id/login"
-                app:popUpToInclusive="true" />
+                app:popUpToInclusive="true"/>
             <action
                 android:id="@+id/action_login_to_userSignUp"
-                app:destination="@id/userSignUp" />
+                app:destination="@id/userSignUp"/>
         </fragment>
         <fragment
             android:id="@+id/userSignUp"
@@ -94,7 +94,7 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            tools:layout="@layout/user_signup" />
+            tools:layout="@layout/user_signup"/>
     </navigation>
     <fragment
         android:id="@+id/paymentsList"
@@ -104,7 +104,16 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim"
-        android:label="Payments List" />
+        android:label="Payments List"/>
+
+    <fragment android:id="@+id/myAccount"
+              android:name="br.com.alura.aluraesporte.MyAccountFragment"
+              android:label="@string/my_account_text"
+              app:enterAnim="@anim/nav_default_enter_anim"
+              app:exitAnim="@anim/nav_default_exit_anim"
+              app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+              app:popExitAnim="@anim/nav_default_pop_exit_anim"
+              tools:layout="@layout/fragment_my_account"/>
 
 
 </navigation>
