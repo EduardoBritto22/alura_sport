@@ -17,16 +17,21 @@ class FirebaseAuthRepository(private val firebaseAuth: FirebaseAuth) {
 
     fun authenticate(user: User): LiveData<Resource<Boolean>> {
         val liveData = MutableLiveData<Resource<Boolean>>()
-        firebaseAuth.signInWithEmailAndPassword(
-            user.email,
-            user.password
-        ).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                liveData.value = Resource(true)
-            } else {
-                Log.e(TAG, "authenticate: ", task.exception)
-                liveData.value = Resource(false,task.exception?.message)
+        try {
+            firebaseAuth.signInWithEmailAndPassword(
+                user.email,
+                user.password
+            ).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    liveData.value = Resource(true)
+                } else {
+                    Log.e(TAG, "authenticate: ", task.exception)
+                    val errorMessage = getAuthenticateError(task.exception)
+                    liveData.value = Resource(false,errorMessage)
+                }
             }
+        } catch (e: Exception) {
+            liveData.value = Resource(false, "E-mail or password can not be empty")
         }
         return liveData
     }
@@ -57,8 +62,17 @@ class FirebaseAuthRepository(private val firebaseAuth: FirebaseAuth) {
     private fun getRegisterError(exception: Exception): String {
         val errorMessage = when (exception) {
             is FirebaseAuthWeakPasswordException -> "The password must have at least 6 digits"
-            is FirebaseAuthInvalidCredentialsException -> "Invalid email"
+            is FirebaseAuthInvalidCredentialsException -> "You have entered an invalid email or password"
             is FirebaseAuthUserCollisionException -> "Email already registered"
+            else -> "Unknown error"
+        }
+        return errorMessage
+    }
+
+    private fun getAuthenticateError(exception: Exception?): String {
+        val errorMessage = when (exception) {
+            is FirebaseAuthInvalidUserException,
+            is FirebaseAuthInvalidCredentialsException -> "You have entered an invalid email or password"
             else -> "Unknown error"
         }
         return errorMessage

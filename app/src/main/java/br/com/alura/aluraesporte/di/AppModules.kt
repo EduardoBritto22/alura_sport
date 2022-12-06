@@ -9,12 +9,11 @@ import br.com.alura.aluraesporte.database.dao.PagamentoDAO
 import br.com.alura.aluraesporte.database.dao.ProdutoDAO
 import br.com.alura.aluraesporte.model.Product
 import br.com.alura.aluraesporte.repository.FirebaseAuthRepository
-import br.com.alura.aluraesporte.repository.LoginRepository
 import br.com.alura.aluraesporte.repository.PaymentRepository
 import br.com.alura.aluraesporte.repository.ProductRepository
+import br.com.alura.aluraesporte.ui.fragment.PaymentFragment
 import br.com.alura.aluraesporte.ui.fragment.ProductDetailsFragment
 import br.com.alura.aluraesporte.ui.fragment.ProductsListFragment
-import br.com.alura.aluraesporte.ui.fragment.PaymentFragment
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.PaymentListAdapter
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProductsAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.*
@@ -84,7 +83,6 @@ val daoModule = module {
     single<PagamentoDAO> { get<AppDatabase>().pagamentoDao() }
     single<ProductRepository> { ProductRepository(get()) }
     single<PaymentRepository> { PaymentRepository(get()) }
-    single { LoginRepository(get()) }
     single { FirebaseAuthRepository(get()) }
     single { PreferenceManager.getDefaultSharedPreferences(get()) }
 }
@@ -101,7 +99,7 @@ val viewModelModule = module {
     viewModel<ProductsViewModel> { ProductsViewModel(get()) }
     viewModel<ProductDetailsViewModel> { (id: Long) -> ProductDetailsViewModel(produtoId = id,get()) }
     viewModel<PaymentViewModel> { PaymentViewModel(get(), get()) }
-    viewModel { LoginViewModel(get(), get()) }
+    viewModel { LoginViewModel(get()) }
     viewModel { AppStateViewModel() }
     viewModel { RegisterUserViewModel(get()) }
 }
