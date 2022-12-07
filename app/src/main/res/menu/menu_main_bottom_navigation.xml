@@ -9,4 +9,9 @@
         android:id="@+id/paymentsList"
         android:icon="@drawable/ic_action_payments"
         android:title="@string/payments_text" />
+
+    <item
+        android:id="@+id/myAccount"
+        android:icon="@drawable/ic_action_my_account"
+        android:title="@string/my_account_text" />
 </menu>

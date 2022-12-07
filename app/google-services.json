@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "789790724539",
+    "project_id": "alura-sports-55e82",
+    "storage_bucket": "alura-sports-55e82.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789790724539:android:dbe0354a5b602b73b0349e",
+        "android_client_info": {
+          "package_name": "br.com.alura.aluraesporte"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789790724539-i74bls4siejfs4j1nvqk56pmri4ah9po.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIFqbyTT0Y6DJHBZ2gnicWUQSWqIqxdhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789790724539-i74bls4siejfs4j1nvqk56pmri4ah9po.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

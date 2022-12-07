@@ -3,7 +3,7 @@
     <string name="app_name">Alura Sports</string>
     <string name="comprar">Buy</string>
     <string name="data_de_validade">Validity date</string>
-    <string name="numero_cartao">Card number</string>
+    <string name="card_number">Card number</string>
     <string name="confirmar_pagamento">Confirm payment</string>
     <string name="log_out">Log out</string>
     <string name="user_id">User Id</string>
@@ -14,4 +14,6 @@
     <string name="name">Name</string>
     <string name="products_text">Products</string>
     <string name="payments_text">Payments</string>
+    <string name="email_text">E-mail</string>
+    <string name="my_account_text">My account</string>
 </resources>
