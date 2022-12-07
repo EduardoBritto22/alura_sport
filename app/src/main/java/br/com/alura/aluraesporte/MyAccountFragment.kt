@@ -1,17 +1,17 @@
 package br.com.alura.aluraesporte
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import br.com.alura.aluraesporte.ui.fragment.BaseFragment
 import br.com.alura.aluraesporte.ui.viewmodel.MyAccountViewModel
 import kotlinx.android.synthetic.main.fragment_my_account.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class MyAccountFragment : Fragment() {
+class MyAccountFragment : BaseFragment() {
 
-    private val viewModel: MyAccountViewModel by viewModels()
+    private val viewModel: MyAccountViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +24,10 @@ class MyAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        my_account_email.text = viewModel.email
+        viewModel.user.observe(viewLifecycleOwner){
+            it?.let {user->
+                my_account_email.text = user.email
+            }
+        }
     }
 }

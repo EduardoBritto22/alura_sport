@@ -86,5 +86,15 @@ class FirebaseAuthRepository(private val firebaseAuth: FirebaseAuth) {
         return false
     }
 
+    fun getUser(): LiveData<User> {
+        val liveData = MutableLiveData<User>()
+        firebaseAuth.currentUser?.let {firebaseUser ->
+            firebaseUser.email?.let {email->
+                liveData.value = User(email)
+            }
+        }
+        return liveData
+    }
+
 
 }
