@@ -1,7 +1,6 @@
 package br.com.alura.aluraesporte.ui.fragment
 
 import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.databinding.LoginBinding
 import br.com.alura.aluraesporte.extensions.snackBar
 import br.com.alura.aluraesporte.model.User
@@ -50,7 +50,34 @@ class LoginFragment : Fragment() {
         appStateViewModel.hasComponents = VisualComponents()
         setUpLoginButton()
         setUpSignUpButton()
+
+        val authUi = AuthUI.getInstance()
+        val intent = authUi.createSignInIntentBuilder()
+            .setTheme(R.style.AppTheme)
+            .setLogo(R.drawable.alurasports_logo)
+            .setAvailableProviders(listOf(AuthUI.IdpConfig.EmailBuilder().build()))
+            .build()
+
+        signInLauncher.launch(intent)
+
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if (result.resultCode == RESULT_OK) {
+            // Successfully signed in
+            goToProductsList()
+        } else {
+            response?.let {
+                Log.e("LoginFragment", "onSignInResult: Failed to authenticate", response.error)
+                view?.snackBar(it.error?.message.orEmpty())
+            }
+        }
+    }
+
 
     private fun setUpSignUpButton() {
         binding.loginButtonSignup.setOnClickListener {

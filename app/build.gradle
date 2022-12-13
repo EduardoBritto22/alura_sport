@@ -8,6 +8,7 @@ plugins {
 android {
     compileSdk 33
     defaultConfig {
+        resConfigs "en"
         applicationId "br.com.alura.aluraesporte"
         minSdkVersion 21
         targetSdkVersion 33
@@ -28,6 +29,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
 
     }
+    buildFeatures {
+        viewBinding true
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
@@ -71,4 +76,7 @@ dependencies {
 
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-auth-ktx'
+
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
+
 }
