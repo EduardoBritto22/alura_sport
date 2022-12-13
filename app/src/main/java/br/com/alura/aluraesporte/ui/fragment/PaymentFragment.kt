@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
-import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.databinding.PaymentBinding
 import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
 import br.com.alura.aluraesporte.model.Payment
 import br.com.alura.aluraesporte.model.Product
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.PaymentViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
-import kotlinx.android.synthetic.main.payment.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -29,16 +28,19 @@ class PaymentFragment : BaseFragment() {
 
     private lateinit var chosenProduct: Product
 
+    private var _binding: PaymentBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            R.layout.payment,
-            container,
-            false
-        )
+    ): View {
+        _binding = PaymentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,19 +49,22 @@ class PaymentFragment : BaseFragment() {
         searchProduct()
         appStateViewModel.hasComponents = VisualComponents(appBar = true)
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
     private fun searchProduct() {
         viewModel.searchProductById(productId).observe(viewLifecycleOwner) {
             it?.let { chosenProduct ->
                 this.chosenProduct = chosenProduct
-                payment_price.text = chosenProduct.price
+                binding.paymentPrice.text = chosenProduct.price
                     .formatToBrazilianCurrency()
             }
         }
     }
 
     private fun setUpConfirmPaymentButton() {
-        payment_button_confirm_payment.setOnClickListener {
+        binding.paymentButtonConfirmPayment.setOnClickListener {
             createPayment()?.let(this::save) ?: Toast.makeText(
                 context,
                 FAIL_TO_CREATE_PAYMENT,
@@ -89,11 +94,11 @@ class PaymentFragment : BaseFragment() {
     }
 
     private fun createPayment(): Payment? {
-        val cardNumber = payment_card_number
+        val cardNumber = binding.paymentCardNumber
             .editText?.text.toString()
-        val validityDate = payment_date_validity
+        val validityDate = binding.paymentDateValidity
             .editText?.text.toString()
-        val cvc = payment_cvc
+        val cvc = binding.paymentCvc
             .editText?.text.toString()
         return generatePayment(cardNumber, validityDate, cvc)
     }

@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout.VERTICAL
 import androidx.recyclerview.widget.DividerItemDecoration
-import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.databinding.ListaProdutosBinding
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProductsAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductsViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
-import kotlinx.android.synthetic.main.lista_produtos.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -21,6 +20,10 @@ class ProductsListFragment : BaseFragment() {
     private val viewModel: ProductsViewModel by viewModel()
     private val appStateViewModel: AppStateViewModel by sharedViewModel()
     private val adapter: ProductsAdapter by inject()
+    private var _binding: ListaProdutosBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +34,8 @@ class ProductsListFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(
-            R.layout.lista_produtos,
-            container,
-            false
-        )
+        _binding = ListaProdutosBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,6 +46,12 @@ class ProductsListFragment : BaseFragment() {
             bottomNavigation = true
         )
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
     private fun searchProducts() {
         viewModel.searchAll().observe(this) { foundedProducts ->
@@ -58,11 +64,11 @@ class ProductsListFragment : BaseFragment() {
 
     private fun setUpRecyclerView() {
         val divisor = DividerItemDecoration(context, VERTICAL)
-        lista_produtos_recyclerview.addItemDecoration(divisor)
+        binding.listaProdutosRecyclerview.addItemDecoration(divisor)
         adapter.onItemClickListener = {selectedProduct ->
             gotToProductDetails(selectedProduct.id)
         }
-        lista_produtos_recyclerview.adapter = adapter
+        binding.listaProdutosRecyclerview.adapter = adapter
     }
 
     private fun gotToProductDetails(productId: Long) {

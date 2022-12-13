@@ -44,17 +44,17 @@ val testeDatabaseModule = module {
                         val dao: ProdutoDAO by inject()
                         dao.salva(
                             Product(
-                                nome = "Bola de futebol",
+                                name = "Bola de futebol",
                                 price = BigDecimal("100")
                             ), Product(
-                                nome = "Camisa",
+                                name = "Camisa",
                                 price = BigDecimal("80")
                             ),
                             Product(
-                                nome = "Chuteira",
+                                name = "Chuteira",
                                 price = BigDecimal("120")
                             ), Product(
-                                nome = "Bermuda",
+                                name = "Bermuda",
                                 price = BigDecimal("60")
                             )
                         )
