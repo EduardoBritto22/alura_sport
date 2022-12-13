@@ -1,11 +1,10 @@
-package br.com.alura.aluraesporte
+package br.com.alura.aluraesporte.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.alura.aluraesporte.databinding.FragmentMyAccountBinding
-import br.com.alura.aluraesporte.ui.fragment.BaseFragment
 import br.com.alura.aluraesporte.ui.viewmodel.MyAccountViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 

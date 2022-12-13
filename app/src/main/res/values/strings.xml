@@ -16,4 +16,6 @@
     <string name="payments_text">Payments</string>
     <string name="email_text">E-mail</string>
     <string name="my_account_text">My account</string>
+    <string name="enter_text">Enter</string>
+    <string name="alurasports_intro_text">Boost your favorite sport with our products!</string>
 </resources>

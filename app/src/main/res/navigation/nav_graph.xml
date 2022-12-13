@@ -107,7 +107,7 @@
         android:label="Payments List"/>
 
     <fragment android:id="@+id/myAccount"
-              android:name="br.com.alura.aluraesporte.MyAccountFragment"
+              android:name="br.com.alura.aluraesporte.ui.fragment.MyAccountFragment"
               android:label="@string/my_account_text"
               app:enterAnim="@anim/nav_default_enter_anim"
               app:exitAnim="@anim/nav_default_exit_anim"
@@ -115,5 +115,29 @@
               app:popExitAnim="@anim/nav_default_pop_exit_anim"
               tools:layout="@layout/fragment_my_account"/>
 
+    <fragment
+        android:id="@+id/start"
+        android:name="br.com.alura.aluraesporte.ui.fragment.StartFragment"
+        android:label="Start"
+        tools:layout="@layout/start" >
+        <action
+            android:id="@+id/action_start_to_ProductsList"
+            app:destination="@id/productsList"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/start"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_start"
+        app:destination="@id/start"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        app:popUpTo="@id/productsList"
+        app:popUpToInclusive="true" />
 
 </navigation>
