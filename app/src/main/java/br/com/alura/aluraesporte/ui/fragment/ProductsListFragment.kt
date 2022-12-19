@@ -45,6 +45,10 @@ class ProductsListFragment : BaseFragment() {
             appBar = true,
             bottomNavigation = true
         )
+        product_list_fab.setOnClickListener {
+           val direction = ProductsListFragmentDirections.actionProductsListToProductFormFragment()
+            navController.navigate(direction)
+        }
     }
 
     override fun onDestroyView() {
