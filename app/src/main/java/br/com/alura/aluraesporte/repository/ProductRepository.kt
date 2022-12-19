@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import br.com.alura.aluraesporte.database.dao.ProdutoDAO
 import br.com.alura.aluraesporte.model.Product
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import java.math.BigDecimal
 
 private const val TAG = "ProductRepository"
@@ -41,17 +42,32 @@ class ProductRepository(private val dao: ProdutoDAO,
                     val products = mutableListOf<Product>()
                     for (document in snapshot.documents) {
                         Log.i(TAG, "onCreate: Product found ${document.data}")
-                        document.data?.let { dados ->
-                            val nome: String = dados["name"] as String
-                            val preco: Double = dados["price"] as Double
-                            val produto = Product(name = nome, price = BigDecimal(preco))
-                            products.add(produto)
+//                        document.data?.let { dados ->
+//                            val nome: String = dados["name"] as String
+//                            val preco: Double = dados["price"] as Double
+//                            val produto = Product(name = nome, price = BigDecimal(preco))
+//                            products.add(produto)
+//                        }
+                        val productDocument = document.toObject<ProductDocument>()
+                        productDocument?.let { notNullProductDocument ->
+                            products.add(notNullProductDocument.toProduct())
                         }
+
                     }
                     liveData.value = products
                 }
             }
         return liveData
     }
+    private class ProductDocument(
+        val name: String = "",
+        val price: Double = 0.0
+    ) {
+        fun toProduct(): Product = Product(
+            name = name,
+            price = BigDecimal(price)
+        )
+    }
+
 
 }
