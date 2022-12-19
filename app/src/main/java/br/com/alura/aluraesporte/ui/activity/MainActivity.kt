@@ -6,17 +6,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.databinding.MainActivityBinding
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
-import kotlinx.android.synthetic.main.main_activity.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val navController by lazy { findNavController(R.id.main_activity_nav) }
     private val viewModel: AppStateViewModel by viewModel()
+
+    private lateinit var binding: MainActivityBinding
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        binding = MainActivityBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         setUpNavController()
     }
 
@@ -32,14 +39,15 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     if (hasComponents.bottomNavigation) {
-                        main_activity_bottom_navigation.visibility = View.VISIBLE
+
+                        binding.mainActivityBottomNavigation.visibility = View.VISIBLE
                     } else {
-                        main_activity_bottom_navigation.visibility = View.GONE
+                        binding.mainActivityBottomNavigation.visibility = View.GONE
                     }
                 }
             }
         }
-        main_activity_bottom_navigation
+        binding.mainActivityBottomNavigation
             .setupWithNavController(navController)
     }
 }

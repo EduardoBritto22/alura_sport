@@ -43,7 +43,7 @@ abstract class BaseFragment:  Fragment() {
                 return when (menuItem.itemId) {
                     R.id.menu_logout -> {
                         loginViewModel.logOut()
-                        goToLogin()
+                        goToStart()
                         true
                     }
 
@@ -57,13 +57,13 @@ abstract class BaseFragment:  Fragment() {
 
     private fun isLogged() {
         if (!loginViewModel.isLogged()) {
-            goToLogin()
+            goToStart()
         }
     }
 
-    protected fun goToLogin() {
+    protected fun goToStart() {
         val directions =
-            NavGraphDirections.actionGlobalLogin()
+            NavGraphDirections.actionGlobalStart()
         navController.navigate(directions)
     }
 

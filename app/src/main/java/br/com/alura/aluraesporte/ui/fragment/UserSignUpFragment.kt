@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.databinding.UserSignupBinding
 import br.com.alura.aluraesporte.extensions.snackBar
 import br.com.alura.aluraesporte.model.User
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.RegisterUserViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.VisualComponents
-import kotlinx.android.synthetic.main.user_signup.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -23,18 +22,19 @@ class UserSignUpFragment : Fragment() {
     }
     private val appStateViewModel: AppStateViewModel by sharedViewModel()
     private val viewModel: RegisterUserViewModel by viewModel()
+    private var _binding: UserSignupBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            R.layout.user_signup,
-            container,
-            false
-        )
+    ): View {
+        _binding = UserSignupBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,14 +43,18 @@ class UserSignUpFragment : Fragment() {
         setUpRegisterButton()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
     private fun setUpRegisterButton() {
-        user_signup_save_button.setOnClickListener {
+        binding.userSignupSaveButton.setOnClickListener {
 
             clearFieldsErrors()
 
-            val email = user_signup_email.editText?.text.toString()
-            val password = user_signup_password.editText?.text.toString()
-            val confirmPassword = user_signup_password_confirm.editText?.text.toString()
+            val email = binding.userSignupEmail.editText?.text.toString()
+            val password = binding.userSignupPassword.editText?.text.toString()
+            val confirmPassword = binding.userSignupPasswordConfirm.editText?.text.toString()
 
             val valid = validateFields(email, password, confirmPassword)
 
@@ -77,24 +81,24 @@ class UserSignUpFragment : Fragment() {
     private fun validateFields(email: String, password: String, confirmPassword: String): Boolean {
         var valid = true
         if (email.isBlank()) {
-            user_signup_email.error = "The email cannot be empty"
+            binding.userSignupEmail.error = "The email cannot be empty"
             valid = false
         }
         if (password.isBlank()) {
-            user_signup_password.error = "The password cannot be empty"
+            binding.userSignupPassword.error = "The password cannot be empty"
             valid = false
         }
         if (password != confirmPassword) {
-            user_signup_password_confirm.error = "The passwords do not match"
+            binding.userSignupPasswordConfirm.error = "The passwords do not match"
             valid = false
         }
         return valid
     }
 
     private fun clearFieldsErrors() {
-        user_signup_email.error = null
-        user_signup_password.error = null
-        user_signup_password_confirm.error = null
+        binding.userSignupEmail.error = null
+        binding.userSignupPassword.error = null
+        binding.userSignupPasswordConfirm.error = null
     }
 
 }

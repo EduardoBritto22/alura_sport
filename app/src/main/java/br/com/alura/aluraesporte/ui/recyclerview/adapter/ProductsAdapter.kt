@@ -2,13 +2,11 @@ package br.com.alura.aluraesporte.ui.recyclerview.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.databinding.ItemProdutoBinding
 import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
 import br.com.alura.aluraesporte.model.Product
-import kotlinx.android.synthetic.main.item_produto.view.*
 
 class ProductsAdapter(
     private val context: Context,
@@ -17,46 +15,42 @@ class ProductsAdapter(
 ) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewCriada = LayoutInflater.from(context).inflate(
-            R.layout.item_produto,
-            parent,
-            false
-        )
-        return ViewHolder(viewCriada)
+        val binding = ItemProdutoBinding.inflate(LayoutInflater.from(context),parent,false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount() = products.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.vincula(products[position])
+        holder.bind(products[position])
     }
 
-    fun update(produtosNovos: List<Product>) {
+    fun update(newProducts: List<Product>) {
         notifyItemRangeRemoved(0, products.size)
         products.clear()
-        products.addAll(produtosNovos)
+        products.addAll(newProducts)
         notifyItemRangeInserted(0, products.size)
     }
 
-    inner class ViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: ItemProdutoBinding) :
+        RecyclerView.ViewHolder(itemView.root) {
 
         private lateinit var product: Product
-        private val campoNome by lazy { itemView.item_produto_nome }
-        private val campoPreco by lazy { itemView.item_produto_preco }
+        private val nameField by lazy { itemView.itemProdutoNome }
+        private val priceField by lazy { itemView.itemProdutoPreco }
 
         init {
-            itemView.setOnClickListener {
+            itemView.root.setOnClickListener {
                 if (::product.isInitialized) {
                     onItemClickListener(product)
                 }
             }
         }
 
-        fun vincula(product: Product) {
+        fun bind(product: Product) {
             this.product = product
-            campoNome.text = product.nome
-            campoPreco.text = product.price.formatToBrazilianCurrency()
+            nameField.text = product.name
+            priceField.text = product.price.formatToBrazilianCurrency()
         }
 
     }
