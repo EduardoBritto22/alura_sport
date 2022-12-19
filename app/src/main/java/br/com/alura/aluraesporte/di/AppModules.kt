@@ -19,6 +19,8 @@ import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProductsAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -76,12 +78,13 @@ val databaseModule = module {
 
 val firebaseModule = module {
     single<FirebaseAuth> { Firebase.auth }
+    single<FirebaseFirestore> { Firebase.firestore }
 }
 
 val daoModule = module {
     single<ProdutoDAO> { get<AppDatabase>().produtoDao() }
     single<PagamentoDAO> { get<AppDatabase>().pagamentoDao() }
-    single<ProductRepository> { ProductRepository(get()) }
+    single<ProductRepository> { ProductRepository(get(),get()) }
     single<PaymentRepository> { PaymentRepository(get()) }
     single { FirebaseAuthRepository(get()) }
     single { PreferenceManager.getDefaultSharedPreferences(get()) }
