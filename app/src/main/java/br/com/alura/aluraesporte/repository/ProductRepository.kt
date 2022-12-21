@@ -69,6 +69,25 @@ class ProductRepository(
         return liveData
     }
 
+    fun searchAllInFireStoreInRealTime(): LiveData<List<Product>> {
+        val liveData: MutableLiveData<List<Product>> = MutableLiveData<List<Product>>()
+        firestore.collection("products")
+            .addSnapshotListener { snapShot, _ ->
+                snapShot?.let { sQuery ->
+                    val products = mutableListOf<Product>()
+                    for (document in sQuery.documents) {
+                        val productDocument = document.toObject<ProductDocument>()
+                        productDocument?.let { notNullProductDocument ->
+                            products.add(notNullProductDocument.toProduct())
+                        }
+
+                    }
+                    liveData.value = products
+                }
+            }
+        return liveData
+    }
+
     private class ProductDocument(
         val name: String = "",
         val price: Double = 0.0

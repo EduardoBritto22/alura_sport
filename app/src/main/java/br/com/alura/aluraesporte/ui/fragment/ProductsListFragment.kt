@@ -27,6 +27,7 @@ class ProductsListFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        searchProducts()
     }
 
     override fun onCreateView(
@@ -48,11 +49,6 @@ class ProductsListFragment : BaseFragment() {
            val direction = ProductsListFragmentDirections.actionProductsListToProductFormFragment()
             navController.navigate(direction)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        searchProducts()
     }
 
     override fun onDestroyView() {
