@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout.VERTICAL
 import androidx.recyclerview.widget.DividerItemDecoration
-import br.com.alura.aluraesporte.databinding.ListaProdutosBinding
+import br.com.alura.aluraesporte.databinding.ListProductsBinding
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProductsAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductsViewModel
@@ -20,21 +20,20 @@ class ProductsListFragment : BaseFragment() {
     private val viewModel: ProductsViewModel by viewModel()
     private val appStateViewModel: AppStateViewModel by sharedViewModel()
     private val adapter: ProductsAdapter by inject()
-    private var _binding: ListaProdutosBinding? = null
+    private var _binding: ListProductsBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        searchProducts()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ListaProdutosBinding.inflate(inflater, container, false)
+        _binding = ListProductsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -45,10 +44,15 @@ class ProductsListFragment : BaseFragment() {
             appBar = true,
             bottomNavigation = true
         )
-        product_list_fab.setOnClickListener {
+        binding.productListFab.setOnClickListener {
            val direction = ProductsListFragmentDirections.actionProductsListToProductFormFragment()
             navController.navigate(direction)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        searchProducts()
     }
 
     override fun onDestroyView() {

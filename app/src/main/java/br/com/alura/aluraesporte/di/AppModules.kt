@@ -106,4 +106,5 @@ val viewModelModule = module {
     viewModel { AppStateViewModel() }
     viewModel { RegisterUserViewModel(get()) }
     viewModel { MyAccountViewModel(get()) }
+    viewModel { ProductFormViewModel(get()) }
 }

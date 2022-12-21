@@ -10,26 +10,35 @@ import com.google.firebase.firestore.ktx.toObject
 import java.math.BigDecimal
 
 private const val TAG = "ProductRepository"
-class ProductRepository(private val dao: ProdutoDAO,
-                        private val firestore: FirebaseFirestore
+
+class ProductRepository(
+    private val dao: ProdutoDAO,
+    private val firestore: FirebaseFirestore
 ) {
 
     fun searchAll(): LiveData<List<Product>> = dao.buscaTodos()
 
     fun searchById(id: Long): LiveData<Product> = dao.buscaPorId(id)
 
-    private fun save() {
-        val product = Product(name = "Football boots", price = BigDecimal("129.99"))
-        val mappedProduct = mapOf<String, Any>(
-            "name" to product.name,
-            "price" to product.price.toDouble()
-        )
+    fun save(product: Product): LiveData<Boolean> {
+        val liveData = MutableLiveData<Boolean>()
+//        val mappedProduct = mapOf<String, Any>(
+//            "name" to product.name,
+//            "price" to product.price.toDouble()
+//        )
+
+        val productDocument = ProductDocument(name = product.name, price = product.price.toDouble())
 
         firestore.collection("products")
-            .add(mappedProduct)
+            .add(productDocument)
             .addOnSuccessListener {
-                Log.i(TAG, "onCreate: product saved ${it?.id}")
+                liveData.value = true
             }
+            .addOnFailureListener {
+                liveData.value = false
+            }
+
+        return liveData
     }
 
 
@@ -59,6 +68,7 @@ class ProductRepository(private val dao: ProdutoDAO,
             }
         return liveData
     }
+
     private class ProductDocument(
         val name: String = "",
         val price: Double = 0.0

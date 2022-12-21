@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import br.com.alura.aluraesporte.databinding.DetalhesProdutoBinding
+import br.com.alura.aluraesporte.databinding.ProductDetailsBinding
 import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductDetailsViewModel
@@ -20,7 +20,7 @@ class ProductDetailsFragment : BaseFragment() {
     private val productId by lazy { arguments.productId }
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(productId) }
     private val appStateViewModel: AppStateViewModel by sharedViewModel()
-    private var _binding: DetalhesProdutoBinding? = null
+    private var _binding: ProductDetailsBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -30,7 +30,7 @@ class ProductDetailsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DetalhesProdutoBinding.inflate(inflater, container, false)
+        _binding = ProductDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -60,9 +60,9 @@ class ProductDetailsFragment : BaseFragment() {
 
     private fun searchProduct() {
         viewModel.produtoEncontrado.observe(viewLifecycleOwner) {
-            it?.let { produto ->
-                binding.detalhesProdutoNome.text = produto.name
-                binding.detalhesProdutoPreco.text = produto.price.formatToBrazilianCurrency()
+            it?.let { product ->
+                binding.detalhesProdutoNome.text = product.name
+                binding.detalhesProdutoPreco.text = product.price.formatToBrazilianCurrency()
             }
         }
     }
