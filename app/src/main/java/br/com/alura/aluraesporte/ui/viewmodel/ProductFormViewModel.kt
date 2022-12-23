@@ -8,5 +8,6 @@ import br.com.alura.aluraesporte.repository.ProductRepository
 class ProductFormViewModel(private val repository: ProductRepository) : ViewModel() {
 
     fun save(product: Product): LiveData<Boolean> = repository.save(product)
+    fun searchBy(id: String) = repository.searchById(id)
 
 }

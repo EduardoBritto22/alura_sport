@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.databinding.FragmentProductFormBinding
 import br.com.alura.aluraesporte.extensions.snackBar
 import br.com.alura.aluraesporte.model.Product
@@ -17,6 +18,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.math.BigDecimal
 
 class ProductFormFragment : BaseFragment() {
+
+    private val arguments by navArgs<ProductFormFragmentArgs>()
     private val appStateViewModel: AppStateViewModel by sharedViewModel()
     private val viewModel: ProductFormViewModel by viewModel()
     private val controller: NavController by lazy {
@@ -26,7 +29,9 @@ class ProductFormFragment : BaseFragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
+    private val productId by lazy {
+        arguments.productId
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,6 +42,19 @@ class ProductFormFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        productId?.let {id->
+            viewModel.searchBy(id).observe(viewLifecycleOwner){
+                it?.let {product->
+                    val name = product.name
+                    val price = product.price.toString()
+                    binding.formProductFieldName.editText?.setText(name)
+                    binding.formProductFieldPrice.editText?.setText(price)
+                    requireActivity().title = "Edit product"
+                }
+            }
+        }
+
         appStateViewModel.hasComponents = VisualComponents(
             appBar = true,
             bottomNavigation = false
@@ -44,7 +62,7 @@ class ProductFormFragment : BaseFragment() {
         binding.formProductButtonSave.setOnClickListener {
             val name = binding.formProductFieldName.editText?.text.toString()
             val price = binding.formProductFieldPrice.editText?.text.toString()
-            val product = Product(name = name,price = BigDecimal(price))
+            val product = Product(id = productId, name = name,price = BigDecimal(price))
             viewModel.save(product).observe(viewLifecycleOwner){
                 it?.let { saved->
                     if(saved){

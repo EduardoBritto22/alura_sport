@@ -23,6 +23,7 @@ class ProductDetailsFragment : BaseFragment() {
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(productId) }
     private val appStateViewModel: AppStateViewModel by sharedViewModel()
     private var _binding: ProductDetailsBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -51,13 +52,15 @@ class ProductDetailsFragment : BaseFragment() {
             }
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
     private fun goToPayment() {
         val directions =
-        ProductDetailsFragmentDirections.actionProductDetailsToPayment(productId)
+            ProductDetailsFragmentDirections.actionProductDetailsToPayment(productId)
         navController.navigate(directions)
     }
 
@@ -79,9 +82,14 @@ class ProductDetailsFragment : BaseFragment() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.id.menu_logout -> {
-                        loginViewModel.logOut()
-                        goToStart()
+                    R.id.edit_menu -> {
+                        ProductDetailsFragmentDirections
+                            .actionProductDetailsToProductForm(productId)
+                            .let(navController::navigate)
+                        true
+                    }
+
+                    R.id.delete_menu -> {
                         true
                     }
 
