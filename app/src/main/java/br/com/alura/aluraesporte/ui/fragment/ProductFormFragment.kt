@@ -43,9 +43,48 @@ class ProductFormFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        productId?.let {id->
-            viewModel.searchBy(id).observe(viewLifecycleOwner){
-                it?.let {product->
+        tryToSearchProduct()
+
+        appStateViewModel.hasComponents = VisualComponents(
+            appBar = true,
+            bottomNavigation = false
+        )
+        setUpSaveButton()
+    }
+
+    private fun setUpSaveButton() {
+        binding.formProductButtonSave.setOnClickListener {
+            val product = createProduct()
+            save(product)
+        }
+    }
+
+    private fun save(product: Product) {
+        viewModel.save(product).observe(viewLifecycleOwner) {
+            it?.let { saved ->
+                if (saved) {
+                    controller.popBackStack()
+                    return@observe
+                }
+            }
+            view?.snackBar("Fail to save a product")
+        }
+    }
+
+    private fun createProduct(): Product {
+        val name = binding.formProductFieldName.editText?.text.toString()
+        val price = binding.formProductFieldPrice.editText?.text.toString()
+        return Product(
+            id = productId,
+            name = name,
+            price = BigDecimal(price)
+        )
+    }
+
+    private fun tryToSearchProduct() {
+        productId?.let { id ->
+            viewModel.searchBy(id).observe(viewLifecycleOwner) {
+                it?.let { product ->
                     val name = product.name
                     val price = product.price.toString()
                     binding.formProductFieldName.editText?.setText(name)
@@ -53,27 +92,6 @@ class ProductFormFragment : BaseFragment() {
                     requireActivity().title = "Edit product"
                 }
             }
-        }
-
-        appStateViewModel.hasComponents = VisualComponents(
-            appBar = true,
-            bottomNavigation = false
-        )
-        binding.formProductButtonSave.setOnClickListener {
-            val name = binding.formProductFieldName.editText?.text.toString()
-            val price = binding.formProductFieldPrice.editText?.text.toString()
-            val product = Product(id = productId, name = name,price = BigDecimal(price))
-            viewModel.save(product).observe(viewLifecycleOwner){
-                it?.let { saved->
-                    if(saved){
-                        controller.popBackStack()
-                        return@observe
-                    }
-                }
-                view.snackBar("Fail to save a product")
-            }
-
-
         }
     }
 }

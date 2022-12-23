@@ -4,7 +4,7 @@ Project to practice Architecture Components Navigation
 
 ## 🔨 Project features
 
-Alura Sports presents a catalog of varied sport products. It is possible to buy them and see the list of payments. 
+Alura Sports presents a catalog of varied sport products. It is possible to buy them and see the list of payments.
 
 ## ✔️ Features and frameworks/libraries
 

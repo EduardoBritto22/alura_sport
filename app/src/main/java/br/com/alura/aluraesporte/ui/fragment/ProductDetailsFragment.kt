@@ -83,16 +83,12 @@ class ProductDetailsFragment : BaseFragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.edit_menu -> {
-                        ProductDetailsFragmentDirections
-                            .actionProductDetailsToProductForm(productId)
-                            .let(navController::navigate)
+                        goToForm()
                         true
                     }
 
                     R.id.delete_menu -> {
-                        viewModel.delete().observe(viewLifecycleOwner){
-                            navController.popBackStack()
-                        }
+                        delete()
                         true
                     }
 
@@ -101,6 +97,18 @@ class ProductDetailsFragment : BaseFragment() {
             }
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun delete() {
+        viewModel.delete().observe(viewLifecycleOwner) {
+            navController.popBackStack()
+        }
+    }
+
+    private fun goToForm() {
+        ProductDetailsFragmentDirections
+            .actionProductDetailsToProductForm(productId)
+            .let(navController::navigate)
     }
 
 

@@ -45,10 +45,7 @@ class ProductsListFragment : BaseFragment() {
             appBar = true,
             bottomNavigation = true
         )
-        binding.productListFab.setOnClickListener {
-           val direction = ProductsListFragmentDirections.actionProductsListToProductFormFragment()
-            navController.navigate(direction)
-        }
+        setUpFabAdd()
     }
 
     override fun onDestroyView() {
@@ -56,12 +53,18 @@ class ProductsListFragment : BaseFragment() {
         _binding = null
     }
 
-
     private fun searchProducts() {
         viewModel.searchAll().observe(this) { foundedProducts ->
             foundedProducts?.let {
                 adapter.update(it)
             }
+        }
+    }
+
+    private fun setUpFabAdd() {
+        binding.productListFab.setOnClickListener {
+            val direction = ProductsListFragmentDirections.actionProductsListToProductFormFragment()
+            navController.navigate(direction)
         }
     }
 
