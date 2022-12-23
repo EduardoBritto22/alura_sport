@@ -90,6 +90,9 @@ class ProductDetailsFragment : BaseFragment() {
                     }
 
                     R.id.delete_menu -> {
+                        viewModel.delete().observe(viewLifecycleOwner){
+                            navController.popBackStack()
+                        }
                         true
                     }
 

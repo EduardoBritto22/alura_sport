@@ -59,6 +59,13 @@ class ProductRepository(
             }
     }
 
+    fun delete(productId: String): LiveData<Boolean> = MutableLiveData<Boolean>().apply {
+        firestore.collection(FIRESTORE_PRODUCTS_COLLECTION)
+            .document(productId)
+            .delete()
+        value = true
+    }
+
     private class ProductDocument(
         val name: String = "",
         val price: Double = 0.0
