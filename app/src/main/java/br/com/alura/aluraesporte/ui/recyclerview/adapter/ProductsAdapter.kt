@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.alura.aluraesporte.databinding.ItemProdutoBinding
+import br.com.alura.aluraesporte.databinding.ItemProductBinding
 import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
 import br.com.alura.aluraesporte.model.Product
 
@@ -15,7 +15,7 @@ class ProductsAdapter(
 ) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemProdutoBinding.inflate(LayoutInflater.from(context),parent,false)
+        val binding = ItemProductBinding.inflate(LayoutInflater.from(context),parent,false)
         return ViewHolder(binding)
     }
 
@@ -32,7 +32,7 @@ class ProductsAdapter(
         notifyItemRangeInserted(0, products.size)
     }
 
-    inner class ViewHolder(itemView: ItemProdutoBinding) :
+    inner class ViewHolder(itemView: ItemProductBinding) :
         RecyclerView.ViewHolder(itemView.root) {
 
         private lateinit var product: Product

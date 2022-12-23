@@ -2,12 +2,8 @@ package br.com.alura.aluraesporte.di
 
 import androidx.preference.PreferenceManager
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import br.com.alura.aluraesporte.database.AppDatabase
-import br.com.alura.aluraesporte.database.dao.PagamentoDAO
-import br.com.alura.aluraesporte.database.dao.ProdutoDAO
-import br.com.alura.aluraesporte.model.Product
+import br.com.alura.aluraesporte.database.dao.PaymentDAO
 import br.com.alura.aluraesporte.repository.FirebaseAuthRepository
 import br.com.alura.aluraesporte.repository.PaymentRepository
 import br.com.alura.aluraesporte.repository.ProductRepository
@@ -19,50 +15,13 @@ import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProductsAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import java.math.BigDecimal
 
 private const val NOME_BANCO_DE_DADOS = "aluraesporte.db"
-private const val NOME_BANCO_DE_DADOS_TESTE = "aluraesporte-test.db"
-
-val testeDatabaseModule = module {
-    single<AppDatabase> {
-        Room.databaseBuilder(
-            get(),
-            AppDatabase::class.java,
-            NOME_BANCO_DE_DADOS_TESTE
-        ).fallbackToDestructiveMigration()
-            .addCallback(object : RoomDatabase.Callback() {
-                override fun onCreate(db: SupportSQLiteDatabase) {
-                    super.onCreate(db)
-                    CoroutineScope(IO).launch {
-                        val dao: ProdutoDAO by inject()
-                        dao.salva(
-                            Product(
-                                name = "Bola de futebol",
-                                price = BigDecimal("100")
-                            ), Product(
-                                name = "Camisa",
-                                price = BigDecimal("80")
-                            ),
-                            Product(
-                                name = "Chuteira",
-                                price = BigDecimal("120")
-                            ), Product(
-                                name = "Bermuda",
-                                price = BigDecimal("60")
-                            )
-                        )
-                    }
-                }
-            }).build()
-    }
-}
 
 val databaseModule = module {
     single<AppDatabase> {
@@ -76,11 +35,11 @@ val databaseModule = module {
 
 val firebaseModule = module {
     single<FirebaseAuth> { Firebase.auth }
+    single<FirebaseFirestore> { Firebase.firestore }
 }
 
 val daoModule = module {
-    single<ProdutoDAO> { get<AppDatabase>().produtoDao() }
-    single<PagamentoDAO> { get<AppDatabase>().pagamentoDao() }
+    single<PaymentDAO> { get<AppDatabase>().paymentDAO() }
     single<ProductRepository> { ProductRepository(get()) }
     single<PaymentRepository> { PaymentRepository(get()) }
     single { FirebaseAuthRepository(get()) }
@@ -97,10 +56,11 @@ val uiModule = module {
 
 val viewModelModule = module {
     viewModel<ProductsViewModel> { ProductsViewModel(get()) }
-    viewModel<ProductDetailsViewModel> { (id: Long) -> ProductDetailsViewModel(produtoId = id,get()) }
+    viewModel<ProductDetailsViewModel> { (id: String) -> ProductDetailsViewModel(productId = id,get()) }
     viewModel<PaymentViewModel> { PaymentViewModel(get(), get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { AppStateViewModel() }
     viewModel { RegisterUserViewModel(get()) }
     viewModel { MyAccountViewModel(get()) }
+    viewModel { ProductFormViewModel(get()) }
 }

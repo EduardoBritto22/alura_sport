@@ -12,7 +12,7 @@ class AppApplication : Application() {
             androidContext(this@AppApplication)
             modules(
                 listOf(
-                    testeDatabaseModule,
+                    databaseModule,
                     daoModule,
                     uiModule,
                     viewModelModule,

@@ -1,11 +1,13 @@
 package br.com.alura.aluraesporte.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
-import br.com.alura.aluraesporte.databinding.DetalhesProdutoBinding
+import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.databinding.ProductDetailsBinding
 import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductDetailsViewModel
@@ -20,7 +22,8 @@ class ProductDetailsFragment : BaseFragment() {
     private val productId by lazy { arguments.productId }
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(productId) }
     private val appStateViewModel: AppStateViewModel by sharedViewModel()
-    private var _binding: DetalhesProdutoBinding? = null
+    private var _binding: ProductDetailsBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -30,11 +33,12 @@ class ProductDetailsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DetalhesProdutoBinding.inflate(inflater, container, false)
+        _binding = ProductDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setUpMenu()
         super.onViewCreated(view, savedInstanceState)
         searchProduct()
         setUpBuyButton()
@@ -43,28 +47,69 @@ class ProductDetailsFragment : BaseFragment() {
 
     private fun setUpBuyButton() {
         binding.detalhesProdutoBotaoComprar.setOnClickListener {
-            viewModel.produtoEncontrado.value?.let {
+            viewModel.productFound.value?.let {
                 goToPayment()
             }
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
     private fun goToPayment() {
         val directions =
-        ProductDetailsFragmentDirections.actionProductDetailsToPayment(productId)
+            ProductDetailsFragmentDirections.actionProductDetailsToPayment(productId)
         navController.navigate(directions)
     }
 
     private fun searchProduct() {
-        viewModel.produtoEncontrado.observe(viewLifecycleOwner) {
-            it?.let { produto ->
-                binding.detalhesProdutoNome.text = produto.name
-                binding.detalhesProdutoPreco.text = produto.price.formatToBrazilianCurrency()
+        viewModel.productFound.observe(viewLifecycleOwner) {
+            it?.let { product ->
+                binding.detalhesProdutoNome.text = product.name
+                binding.detalhesProdutoPreco.text = product.price.formatToBrazilianCurrency()
             }
         }
     }
+
+    private fun setUpMenu() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_product_details, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.edit_menu -> {
+                        goToForm()
+                        true
+                    }
+
+                    R.id.delete_menu -> {
+                        delete()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun delete() {
+        viewModel.delete().observe(viewLifecycleOwner) {
+            navController.popBackStack()
+        }
+    }
+
+    private fun goToForm() {
+        ProductDetailsFragmentDirections
+            .actionProductDetailsToProductForm(productId)
+            .let(navController::navigate)
+    }
+
 
 }

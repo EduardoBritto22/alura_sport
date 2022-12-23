@@ -4,7 +4,7 @@
     <string name="comprar">Comprar</string>
     <string name="data_de_validade">Data de validade</string>
     <string name="card_number">Número cartão</string>
-    <string name="confirmar_pagamento">Confirmar pagamento</string>
+    <string name="confirm_payment">Confirmar pagamento</string>
     <string name="log_out">Deslogar</string>
     <string name="user_id">Id do usuário</string>
     <string name="password">Senha</string>
@@ -16,6 +16,10 @@
     <string name="payments_text">Pagamentos</string>
     <string name="email_text">E-mail</string>
     <string name="my_account_text">Minha conta</string>
+    <string name="save_text">Salvar</string>
+    <string name="price">Preço</string>
     <string name="enter_text">Entrar</string>
     <string name="alurasports_intro_text">Impulsione seu esporte favorito com os nossos produtos!</string>
+    <string name="edit_text">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

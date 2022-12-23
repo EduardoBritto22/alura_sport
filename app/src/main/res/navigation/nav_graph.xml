@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/productsList"
         android:name="br.com.alura.aluraesporte.ui.fragment.ProductsListFragment"
-        tools:layout="@layout/lista_produtos"
+        tools:layout="@layout/list_products"
         android:label="List of products">
         <action
             android:id="@+id/action_productsList_to_productDetails"
@@ -17,13 +17,19 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action android:id="@+id/action_productsList_to_productFormFragment"
+                app:destination="@id/productForm"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
         android:id="@+id/productDetails"
         android:label="Details of the product"
         android:name="br.com.alura.aluraesporte.ui.fragment.ProductDetailsFragment"
-        tools:layout="@layout/detalhes_produto">
+        tools:layout="@layout/product_details">
         <action
             android:id="@+id/action_productDetails_to_payment"
             app:destination="@id/payment"
@@ -33,7 +39,15 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <argument
             android:name="productId"
-            app:argType="long"/>
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_productDetails_to_productForm"
+            app:destination="@id/productForm"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            />
     </fragment>
 
     <fragment
@@ -53,7 +67,7 @@
             app:popUpToInclusive="true"/>
         <argument
             android:name="productId"
-            app:argType="long"/>
+            app:argType="string"/>
     </fragment>
     <action
         android:id="@+id/action_global_login"
@@ -114,6 +128,22 @@
               app:popEnterAnim="@anim/nav_default_pop_enter_anim"
               app:popExitAnim="@anim/nav_default_pop_exit_anim"
               tools:layout="@layout/fragment_my_account"/>
+
+    <fragment android:id="@+id/productForm"
+              android:name="br.com.alura.aluraesporte.ui.fragment.ProductFormFragment"
+              android:label="Register a product"
+              app:enterAnim="@anim/nav_default_enter_anim"
+              app:exitAnim="@anim/nav_default_exit_anim"
+              app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+              app:popExitAnim="@anim/nav_default_pop_exit_anim"
+              tools:layout="@layout/fragment_product_form" >
+        <argument
+            android:name="productId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/start"

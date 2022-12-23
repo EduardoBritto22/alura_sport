@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout.VERTICAL
 import androidx.recyclerview.widget.DividerItemDecoration
-import br.com.alura.aluraesporte.databinding.ListaProdutosBinding
+import br.com.alura.aluraesporte.databinding.ListProductsBinding
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProductsAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ProductsViewModel
@@ -20,7 +20,7 @@ class ProductsListFragment : BaseFragment() {
     private val viewModel: ProductsViewModel by viewModel()
     private val appStateViewModel: AppStateViewModel by sharedViewModel()
     private val adapter: ProductsAdapter by inject()
-    private var _binding: ListaProdutosBinding? = null
+    private var _binding: ListProductsBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -34,7 +34,7 @@ class ProductsListFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ListaProdutosBinding.inflate(inflater, container, false)
+        _binding = ListProductsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -45,13 +45,13 @@ class ProductsListFragment : BaseFragment() {
             appBar = true,
             bottomNavigation = true
         )
+        setUpFabAdd()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
     private fun searchProducts() {
         viewModel.searchAll().observe(this) { foundedProducts ->
@@ -61,17 +61,26 @@ class ProductsListFragment : BaseFragment() {
         }
     }
 
+    private fun setUpFabAdd() {
+        binding.productListFab.setOnClickListener {
+            val direction = ProductsListFragmentDirections.actionProductsListToProductFormFragment()
+            navController.navigate(direction)
+        }
+    }
+
 
     private fun setUpRecyclerView() {
         val divisor = DividerItemDecoration(context, VERTICAL)
         binding.listaProdutosRecyclerview.addItemDecoration(divisor)
         adapter.onItemClickListener = {selectedProduct ->
-            gotToProductDetails(selectedProduct.id)
+            selectedProduct.id?.let {
+                gotToProductDetails(it)
+            }
         }
         binding.listaProdutosRecyclerview.adapter = adapter
     }
 
-    private fun gotToProductDetails(productId: Long) {
+    private fun gotToProductDetails(productId: String) {
 
         val directions =
             ProductsListFragmentDirections.actionProductsListToProductDetails(productId)

@@ -112,7 +112,7 @@ class PaymentFragment : BaseFragment() {
             cardNumber = cardNumber.toInt(),
             validityDate = validityDate,
             cvc = cvc.toInt(),
-            produtoId = productId,
+            productId = productId,
             price = chosenProduct.price
         )
     } catch (e: NumberFormatException) {

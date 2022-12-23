@@ -7,7 +7,7 @@ import androidx.room.Query
 import br.com.alura.aluraesporte.model.Payment
 
 @Dao
-interface PagamentoDAO {
+interface PaymentDAO {
 
     @Insert
     fun salva(payment: Payment) : Long
