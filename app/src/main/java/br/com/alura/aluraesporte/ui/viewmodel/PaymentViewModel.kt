@@ -11,7 +11,7 @@ class PaymentViewModel(
     private val productRepository: ProductRepository) : ViewModel() {
 
     fun save(payment: Payment) = paymentRepository.save(payment)
-    fun searchProductById(id: Long) = productRepository.searchById(id)
+    fun searchProductById(id: String) = productRepository.searchById(id)
     fun all(): LiveData<List<Payment>> = paymentRepository.all()
 
 }

@@ -20,4 +20,6 @@
     <string name="price">Preço</string>
     <string name="enter_text">Entrar</string>
     <string name="alurasports_intro_text">Impulsione seu esporte favorito com os nossos produtos!</string>
+    <string name="edit_text">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

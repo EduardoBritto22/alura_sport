@@ -1,10 +1,12 @@
 package br.com.alura.aluraesporte.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
+import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.databinding.ProductDetailsBinding
 import br.com.alura.aluraesporte.extensions.formatToBrazilianCurrency
 import br.com.alura.aluraesporte.ui.viewmodel.AppStateViewModel
@@ -35,6 +37,7 @@ class ProductDetailsFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setUpMenu()
         super.onViewCreated(view, savedInstanceState)
         searchProduct()
         setUpBuyButton()
@@ -43,7 +46,7 @@ class ProductDetailsFragment : BaseFragment() {
 
     private fun setUpBuyButton() {
         binding.detalhesProdutoBotaoComprar.setOnClickListener {
-            viewModel.produtoEncontrado.value?.let {
+            viewModel.productFound.value?.let {
                 goToPayment()
             }
         }
@@ -59,12 +62,35 @@ class ProductDetailsFragment : BaseFragment() {
     }
 
     private fun searchProduct() {
-        viewModel.produtoEncontrado.observe(viewLifecycleOwner) {
+        viewModel.productFound.observe(viewLifecycleOwner) {
             it?.let { product ->
                 binding.detalhesProdutoNome.text = product.name
                 binding.detalhesProdutoPreco.text = product.price.formatToBrazilianCurrency()
             }
         }
     }
+
+    private fun setUpMenu() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_product_details, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.menu_logout -> {
+                        loginViewModel.logOut()
+                        goToStart()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
 
 }

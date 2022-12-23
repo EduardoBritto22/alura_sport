@@ -2,7 +2,6 @@ package br.com.alura.aluraesporte.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import br.com.alura.aluraesporte.database.dao.ProdutoDAO
 import br.com.alura.aluraesporte.model.Product
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
@@ -11,11 +10,21 @@ import java.math.BigDecimal
 private const val FIRESTORE_PRODUCTS_COLLECTION = "products"
 
 class ProductRepository(
-    private val dao: ProdutoDAO,
     private val firestore: FirebaseFirestore
 ) {
 
-    fun searchById(id: Long): LiveData<Product> = dao.buscaPorId(id)
+    fun searchById(id: String): LiveData<Product> = MutableLiveData<Product>().apply {
+        firestore.collection(FIRESTORE_PRODUCTS_COLLECTION)
+            .document(id)
+            .addSnapshotListener { s, _ ->
+                s?.let { document ->
+                    document.toObject<ProductDocument>()?.toProduct(document.id)
+                        ?.let { product ->
+                            value = product
+                        }
+                }
+            }
+    }
 
     fun save(product: Product) = MutableLiveData<Boolean>().apply {
 
@@ -23,15 +32,12 @@ class ProductRepository(
             name = product.name,
             price = product.price.toDouble()
         )
+        val document = firestore
+            .collection(FIRESTORE_PRODUCTS_COLLECTION)
+            .document()
+        document.set(productDocument)
 
-        firestore.collection(FIRESTORE_PRODUCTS_COLLECTION)
-            .add(productDocument)
-            .addOnSuccessListener {
-                value = true
-            }
-            .addOnFailureListener {
-                value = false
-            }
+        value = true
     }
 
     fun searchAll() = MutableLiveData<List<Product>>().apply {
@@ -40,7 +46,7 @@ class ProductRepository(
 
                 snapShot?.let { sQuery ->
                     val products: List<Product> = sQuery.documents.mapNotNull { document ->
-                        document.toObject<ProductDocument>()?.toProduct()
+                        document.toObject<ProductDocument>()?.toProduct(document.id)
                     }
                     value = products
                 }
@@ -51,7 +57,8 @@ class ProductRepository(
         val name: String = "",
         val price: Double = 0.0
     ) {
-        fun toProduct(): Product = Product(
+        fun toProduct(id: String): Product = Product(
+            id = id,
             name = name,
             price = BigDecimal(price)
         )

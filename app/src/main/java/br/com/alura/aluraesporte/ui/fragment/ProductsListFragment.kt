@@ -70,12 +70,14 @@ class ProductsListFragment : BaseFragment() {
         val divisor = DividerItemDecoration(context, VERTICAL)
         binding.listaProdutosRecyclerview.addItemDecoration(divisor)
         adapter.onItemClickListener = {selectedProduct ->
-            gotToProductDetails(selectedProduct.id)
+            selectedProduct.id?.let {
+                gotToProductDetails(it)
+            }
         }
         binding.listaProdutosRecyclerview.adapter = adapter
     }
 
-    private fun gotToProductDetails(productId: Long) {
+    private fun gotToProductDetails(productId: String) {
 
         val directions =
             ProductsListFragmentDirections.actionProductsListToProductDetails(productId)
